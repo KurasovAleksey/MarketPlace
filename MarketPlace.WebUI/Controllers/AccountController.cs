@@ -14,6 +14,7 @@ namespace MarketPlace.WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        #region Register
         private ApplicationUserManager UserManager
         {
             get
@@ -21,7 +22,7 @@ namespace MarketPlace.WebUI.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
- 
+
         public ActionResult Register()
         {
             return View();
@@ -33,7 +34,7 @@ namespace MarketPlace.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser { Name = model.Name, Sname = model.Sname, UserName = model.UserName, 
-				Email = model.Email, RegistrationDate = DateTime.Now };
+				Email = model.Email, RegistrationDate = DateTime.Now, PhoneNumber = model.PhoneNumber};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -49,8 +50,10 @@ namespace MarketPlace.WebUI.Controllers
             }
             return View(model);
         }
-		
-		private IAuthenticationManager AuthenticationManager
+        #endregion
+
+        #region Login - Logout
+        private IAuthenticationManager AuthenticationManager
 		{
 			get
 			{
@@ -97,6 +100,73 @@ namespace MarketPlace.WebUI.Controllers
 			AuthenticationManager.SignOut();
 			return RedirectToAction("Login");
 		}
-		
+        #endregion
+
+        #region Delete user
+
+        [HttpGet]
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public async Task<ActionResult> DeleteConfirmed()
+        {
+            ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+            if (user != null)
+            {
+                IdentityResult result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Logout", "Account");
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Edit user
+
+        public async Task<ActionResult> Edit()
+        {
+            ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+            if (user != null)
+            {
+                EditModel model = new EditModel { PhoneNumber = user.PhoneNumber };
+                return View(model);
+            }
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(EditModel model)
+        {
+            ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+            if (user != null)
+            {
+                user.PhoneNumber = model.PhoneNumber;
+                IdentityResult result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Что-то пошло не так");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Пользователь не найден");
+            }
+
+            return View(model);
+        }
+
+        #endregion
+
     }
 }
