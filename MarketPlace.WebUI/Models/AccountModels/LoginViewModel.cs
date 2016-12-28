@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MarketPlace.WebUI.Models
 {
 
-    public class LoginModel
+    public class LoginViewModel
     {
         [Required]
         public string Email { get; set; }

@@ -31,7 +31,7 @@ namespace MarketPlace.WebUI.Controllers
         }
  
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace MarketPlace.WebUI.Controllers
  
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Login(LoginModel model, string returnUrl)
+		public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
 		{
 			if (ModelState.IsValid)
 			{
@@ -135,14 +135,14 @@ namespace MarketPlace.WebUI.Controllers
             ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
             if (user != null)
             {
-                EditModel model = new EditModel { PhoneNumber = user.PhoneNumber };
+                EditViewModel model = new EditViewModel { PhoneNumber = user.PhoneNumber };
                 return View(model);
             }
             return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(EditModel model)
+        public async Task<ActionResult> Edit(EditViewModel model)
         {
             ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
             if (user != null)

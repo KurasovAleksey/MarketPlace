@@ -206,20 +206,36 @@
     <Compile Include="Migrations\201612280644147_DataMigration.Designer.cs">
       <DependentUpon>201612280644147_DataMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612281127208_New title.cs" />
+    <Compile Include="Migrations\201612281127208_New title.Designer.cs">
+      <DependentUpon>201612281127208_New title.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281626223_Full DB.cs" />
+    <Compile Include="Migrations\201612281626223_Full DB.Designer.cs">
+      <DependentUpon>201612281626223_Full DB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
-    <Compile Include="Models\ApplicationContext.cs" />
-    <Compile Include="Models\AccountModels\ApplicationRole.cs" />
+    <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationRoleManager.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationRoleStore.cs" />
-    <Compile Include="Models\AccountModels\ApplicationUser.cs" />
+    <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationUserManager.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationUserStore.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationSignInManager.cs" />
-    <Compile Include="Models\AccountModels\EditModel.cs" />
+    <Compile Include="Models\AccountModels\EditViewModel.cs" />
     <Compile Include="Models\AccountModels\IdentityModels.cs" />
-    <Compile Include="Models\AccountModels\LoginModel.cs" />
-    <Compile Include="Models\AccountModels\RegisterModel.cs" />
+    <Compile Include="Models\AccountModels\LoginViewModel.cs" />
+    <Compile Include="Models\AccountModels\RegisterViewModel.cs" />
+    <Compile Include="Models\Auction.cs" />
+    <Compile Include="Models\Bid.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Sale.cs" />
+    <Compile Include="Models\Shop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\MsSqlModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -282,6 +299,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612280644147_DataMigration.resx">
       <DependentUpon>201612280644147_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281127208_New title.resx">
+      <DependentUpon>201612281127208_New title.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281626223_Full DB.resx">
+      <DependentUpon>201612281626223_Full DB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

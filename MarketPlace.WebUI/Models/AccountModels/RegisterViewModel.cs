@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
  
 namespace MarketPlace.WebUI.Models
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
 		[Required]
 		public string Name {get;set;}

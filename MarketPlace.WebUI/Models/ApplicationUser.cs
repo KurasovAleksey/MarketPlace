@@ -1,6 +1,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
@@ -12,6 +13,10 @@ namespace MarketPlace.WebUI.Models
         IdentityUser<int, ApplicationUserLogin, ApplicationUserRole,ApplicationUserClaim>,
         IUser<int>
     {
+        public ApplicationUser()
+        {
+        }
+
         [Required]
         [Column("Name", TypeName = "varchar")]
         [MaxLength(20)]
@@ -26,16 +31,31 @@ namespace MarketPlace.WebUI.Models
         public int RoleId { get; set; }
 
         [Required]
-        [Column("RegistrationDate")]
-        [DataType(DataType.DateTime)]
+        [Column("RegistrationDate", TypeName = "datetime2")]
         public DateTime RegistrationDate { get; set; }
 
-        public ApplicationUser()
-        {
-        }
+        [Required]
+        [MaxLength(20)]
+        public override string UserName { get; set; }
+
+        public ICollection<Item> Items { get; set; }
+
+        public ICollection<Bid> Bids { get; set; }
+
+        [InverseProperty("Sender")]
+        public ICollection<Message> SendingMessages { get; set; }
+
+        [InverseProperty("Receiver")]
+        public ICollection<Message> ReceivingMessages { get; set; }
+
+        [InverseProperty("Sender")]
+        public ICollection<Feedback> SendingFeedbacks { get; set; }
+
+        [InverseProperty("Receiver")]
+        public ICollection<Feedback> ReceivingFeedbacks { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
-    UserManager<ApplicationUser, int> manager)
+            UserManager<ApplicationUser, int> manager)
         {
             var userIdentity = await manager
                 .CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

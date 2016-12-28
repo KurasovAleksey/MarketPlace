@@ -9,8 +9,7 @@ namespace MarketPlace.WebUI.Models
         IdentityRole<int, ApplicationUserRole>, 
         IRole<int>
     {
-        [Column("Description", TypeName = "varchar")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
+        [Column(TypeName = "varchar")]
         [MaxLength(100)]
         [Required]
         public string Description { get; set; }
