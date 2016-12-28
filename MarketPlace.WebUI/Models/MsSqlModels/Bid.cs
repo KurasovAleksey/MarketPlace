@@ -21,7 +21,7 @@ namespace MarketPlace.WebUI.Models
 
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser Gamer { get; set; }
+        public ApplicationUser User { get; set; }
 
         public int AuctionId { get; set; }
         [ForeignKey("AuctionId")]

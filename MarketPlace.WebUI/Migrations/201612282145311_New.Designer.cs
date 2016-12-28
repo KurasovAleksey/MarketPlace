@@ -7,13 +7,13 @@ namespace MarketPlace.WebUI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class Newtitle : IMigrationMetadata
+    public sealed partial class New : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Newtitle));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(New));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612281127208_New title"; }
+            get { return "201612282145311_New"; }
         }
         
         string IMigrationMetadata.Source

@@ -20,12 +20,12 @@ namespace MarketPlace.WebUI.Models
         [Required]
         public DateTime Datetime { get; set; }
 
-        public int UserFromId { get; set; }
-        [ForeignKey("UserFromId")]
-        public ApplicationUser Sender { get; set; }
+        public int FeedbackSenderId { get; set; }
+        [ForeignKey("FeedbackSenderId")]
+        public ApplicationUser FeedbackSender { get; set; }
 
-        public int UserToId { get; set; }
-        [ForeignKey("UserToId")]
-        public ApplicationUser Receiver { get; set; }
+        public int FeedbackReceiverId { get; set; }
+        [ForeignKey("FeedbackReceiverId")]
+        public ApplicationUser FeedbackReceiver { get; set; }
     }
 }

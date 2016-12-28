@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarketPlace.WebUI.Models
 {
-    [Table("Auctions")]
     public class Auction : Sale
     {
         public Auction()

@@ -38,21 +38,25 @@ namespace MarketPlace.WebUI.Models
         [MaxLength(20)]
         public override string UserName { get; set; }
 
+
         public ICollection<Item> Items { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
 
-        [InverseProperty("Sender")]
-        public ICollection<Message> SendingMessages { get; set; }
+        [InverseProperty("Creator")]
+        public ICollection<Dialog> CreatedDialogs { get; set; }
 
-        [InverseProperty("Receiver")]
-        public ICollection<Message> ReceivingMessages { get; set; }
+        [InverseProperty("Guest")]
+        public ICollection<Dialog> GuestDialogs { get; set; }
 
-        [InverseProperty("Sender")]
-        public ICollection<Feedback> SendingFeedbacks { get; set; }
+        public ICollection<DialogReply> Replies { get; set; }
 
-        [InverseProperty("Receiver")]
-        public ICollection<Feedback> ReceivingFeedbacks { get; set; }
+        [InverseProperty("FeedbackSender")]
+        public ICollection<Feedback> OutgoingFeedbacks { get; set; }
+
+        [InverseProperty("FeedbackReceiver")]
+        public ICollection<Feedback> IncomingFeedbacks { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
             UserManager<ApplicationUser, int> manager)

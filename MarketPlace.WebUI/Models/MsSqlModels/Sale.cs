@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarketPlace.WebUI.Models
 {
-    public abstract class Sale
+    public class Sale
     {
         public Sale()
         {
