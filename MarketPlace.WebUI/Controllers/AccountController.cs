@@ -9,12 +9,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
+using MarketPlace.WebUI.Models.AccountModels.Utils;
 
 namespace MarketPlace.WebUI.Controllers
 {
     public class AccountController : Controller
     {
         #region Register
+
         private ApplicationUserManager UserManager
         {
             get
@@ -38,7 +40,8 @@ namespace MarketPlace.WebUI.Controllers
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Login", "Account");
+                    await SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -50,9 +53,11 @@ namespace MarketPlace.WebUI.Controllers
             }
             return View(model);
         }
+
         #endregion
 
         #region Login - Logout
+
         private IAuthenticationManager AuthenticationManager
 		{
 			get
@@ -80,14 +85,8 @@ namespace MarketPlace.WebUI.Controllers
 				}
 				else
 				{
-					ClaimsIdentity claim = await UserManager.CreateIdentityAsync(user, 
-											DefaultAuthenticationTypes.ApplicationCookie);
-					AuthenticationManager.SignOut();
-					AuthenticationManager.SignIn(new AuthenticationProperties
-					{
-						IsPersistent = true
-					}, claim);
-					if (String.IsNullOrEmpty(returnUrl))
+                    await SignInAsync(user, isPersistent: false);
+                    if (String.IsNullOrEmpty(returnUrl))
 						return RedirectToAction("Index", "Home");
 					return Redirect(returnUrl);
 				}
@@ -98,8 +97,9 @@ namespace MarketPlace.WebUI.Controllers
 		public ActionResult Logout()
 		{
 			AuthenticationManager.SignOut();
-			return RedirectToAction("Login");
-		}
+            return RedirectToAction("Index", "Home");
+        }
+
         #endregion
 
         #region Delete user
@@ -168,5 +168,22 @@ namespace MarketPlace.WebUI.Controllers
 
         #endregion
 
+        #region Common methods
+
+        private async Task SignInAsync(ApplicationUser user, bool isPersistent)
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+
+            var identity = await UserManager.CreateIdentityAsync(
+               user, DefaultAuthenticationTypes.ApplicationCookie);
+
+            AuthenticationManager.SignIn(
+               new AuthenticationProperties()
+               {
+                   IsPersistent = isPersistent
+               }, identity);
+        }
+
+        #endregion
     }
 }

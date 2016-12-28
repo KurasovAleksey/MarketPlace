@@ -3,7 +3,7 @@ namespace MarketPlace.WebUI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class DataMigration : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -11,10 +11,9 @@ namespace MarketPlace.WebUI.Migrations
                 "dbo.AspNetRoles",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        Description = c.String(nullable: false, maxLength: 100, unicode: false),
                         Name = c.String(nullable: false, maxLength: 256),
-                        Description = c.String(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
@@ -23,8 +22,8 @@ namespace MarketPlace.WebUI.Migrations
                 "dbo.AspNetUserRoles",
                 c => new
                     {
-                        UserId = c.String(nullable: false, maxLength: 128),
-                        RoleId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.Int(nullable: false),
+                        RoleId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.UserId, t.RoleId })
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
@@ -36,10 +35,10 @@ namespace MarketPlace.WebUI.Migrations
                 "dbo.AspNetUsers",
                 c => new
                     {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
-                        Sname = c.String(),
-                        UserTypeId = c.Int(nullable: false),
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 20, unicode: false),
+                        Sname = c.String(nullable: false, maxLength: 20, unicode: false),
+                        RoleId = c.Int(nullable: false),
                         RegistrationDate = c.DateTime(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
@@ -61,7 +60,7 @@ namespace MarketPlace.WebUI.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.Int(nullable: false),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
                     })
@@ -75,7 +74,7 @@ namespace MarketPlace.WebUI.Migrations
                     {
                         LoginProvider = c.String(nullable: false, maxLength: 128),
                         ProviderKey = c.String(nullable: false, maxLength: 128),
-                        UserId = c.String(nullable: false, maxLength: 128),
+                        UserId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)

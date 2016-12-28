@@ -5,14 +5,14 @@ namespace MarketPlace.WebUI.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<MarketPlace.WebUI.Models.ApplicationContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<MarketPlace.WebUI.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MarketPlace.WebUI.Models.ApplicationContext context)
+        protected override void Seed(MarketPlace.WebUI.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

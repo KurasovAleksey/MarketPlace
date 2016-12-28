@@ -3,13 +3,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MarketPlace.WebUI.Models
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole,
+    int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public ApplicationContext() : base("IdentityDb") { }
+        public ApplicationDbContext() : base("IdentityDb") { }
 
-        public static ApplicationContext Create()
+        public static ApplicationDbContext Create()
         {
-            return new ApplicationContext();
+            return new ApplicationDbContext();
         }
     }
 }
