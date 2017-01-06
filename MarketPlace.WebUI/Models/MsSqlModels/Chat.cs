@@ -21,7 +21,7 @@ namespace MarketPlace.WebUI.Models
         [MaxLength(30)]
         public string Info { get; set; }
 
-        public ICollection<UserChat> UserChats { get; set; }
+        public ICollection<CharMembership> UserChats { get; set; }
 
         public ICollection<Message> Messages { get; set; }
     }

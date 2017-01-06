@@ -27,9 +27,6 @@ namespace MarketPlace.WebUI.Models
         [MaxLength(20)]
         public string Sname { get; set; }
 
-        [Column("RoleId", TypeName = "int")]
-        public int RoleId { get; set; }
-
         [Required]
         [Column("RegistrationDate", TypeName = "datetime2")]
         public DateTime RegistrationDate { get; set; }
@@ -47,11 +44,13 @@ namespace MarketPlace.WebUI.Models
         public bool isBanned { get; set; }
 
 
+
+
         public ICollection<Item> Items { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
 
-        public ICollection<UserChat> UserChats { get; set; }
+        public ICollection<CharMembership> UserChats { get; set; }
 
         public ICollection<Message> Messages { get; set; }
 

@@ -24,6 +24,9 @@ namespace MarketPlace.WebUI.Models
         [Column(TypeName = "datetime2")]
         public DateTime CreationDate { get; set; }
 
+        [Column(TypeName = "bit")]
+        public bool isClosed { get; set; }
+
         public int ItemId { get; set; }
         [ForeignKey("ItemId")]
         public Item Item { get; set; }

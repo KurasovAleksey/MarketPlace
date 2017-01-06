@@ -22,7 +22,7 @@ namespace MarketPlace.WebUI.Models
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        [MaxLength(2000)]
+        [MaxLength(200)]
         public string PicturePath { get; set; }
 
         public int UserId { get; set; }

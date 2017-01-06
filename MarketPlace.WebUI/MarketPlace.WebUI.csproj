@@ -224,6 +224,14 @@
     <Compile Include="Migrations\201701031945147_SecondMigrationAfterNewYear.Designer.cs">
       <DependentUpon>201701031945147_SecondMigrationAfterNewYear.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701062041180_FinalDBStructure%28maybe%29.cs" />
+    <Compile Include="Migrations\201701062041180_FinalDBStructure%28maybe%29.Designer.cs">
+      <DependentUpon>201701062041180_FinalDBStructure%28maybe%29.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701062204000_SecondFinalDBStructure%28maybe%29.cs" />
+    <Compile Include="Migrations\201701062204000_SecondFinalDBStructure%28maybe%29.Designer.cs">
+      <DependentUpon>201701062204000_SecondFinalDBStructure%28maybe%29.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
     <Compile Include="Models\MsSqlModels\Chat.cs" />
@@ -247,7 +255,7 @@
     <Compile Include="Models\MsSqlModels\Message.cs" />
     <Compile Include="Models\MsSqlModels\Sale.cs" />
     <Compile Include="Models\MsSqlModels\Shop.cs" />
-    <Compile Include="Models\MsSqlModels\UserChat.cs" />
+    <Compile Include="Models\MsSqlModels\ChatMembership.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +318,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701031945147_SecondMigrationAfterNewYear.resx">
       <DependentUpon>201701031945147_SecondMigrationAfterNewYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701062041180_FinalDBStructure%28maybe%29.resx">
+      <DependentUpon>201701062041180_FinalDBStructure%28maybe%29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701062204000_SecondFinalDBStructure%28maybe%29.resx">
+      <DependentUpon>201701062204000_SecondFinalDBStructure%28maybe%29.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
