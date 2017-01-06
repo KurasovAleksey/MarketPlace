@@ -3,7 +3,7 @@ namespace MarketPlace.WebUI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class FirstMigrationAfterNewYear : DbMigration
     {
         public override void Up()
         {
@@ -16,9 +16,6 @@ namespace MarketPlace.WebUI.Migrations
                         Information = c.String(nullable: false, maxLength: 400, unicode: false),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                         ItemId = c.Int(nullable: false),
-                        FinishDate = c.DateTime(precision: 7, storeType: "datetime2"),
-                        MaxQuantity = c.Short(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.SaleId)
                 .ForeignKey("dbo.Items", t => t.ItemId, cascadeDelete: false)
@@ -76,7 +73,7 @@ namespace MarketPlace.WebUI.Migrations
                         AuctionId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.BidId)
-                .ForeignKey("dbo.Sales", t => t.AuctionId, cascadeDelete: false)
+                .ForeignKey("dbo.Auction", t => t.AuctionId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
                 .Index(t => t.UserId)
                 .Index(t => t.AuctionId);
@@ -111,23 +108,6 @@ namespace MarketPlace.WebUI.Migrations
                 .Index(t => t.FeedbackReceiverId);
             
             CreateTable(
-                "dbo.Messages",
-                c => new
-                    {
-                        MessageId = c.Int(nullable: false, identity: true),
-                        Subject = c.String(nullable: false),
-                        Text = c.String(nullable: false, maxLength: 1000, unicode: false),
-                        Datetime = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
-                        MessageSenderId = c.Int(nullable: false),
-                        MessageReceiverId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.MessageId)
-                .ForeignKey("dbo.AspNetUsers", t => t.MessageReceiverId, cascadeDelete: false)
-                .ForeignKey("dbo.AspNetUsers", t => t.MessageSenderId, cascadeDelete: false)
-                .Index(t => t.MessageSenderId)
-                .Index(t => t.MessageReceiverId);
-            
-            CreateTable(
                 "dbo.AspNetUserLogins",
                 c => new
                     {
@@ -138,6 +118,47 @@ namespace MarketPlace.WebUI.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.Messages",
+                c => new
+                    {
+                        MessageId = c.Int(nullable: false, identity: true),
+                        Text = c.String(nullable: false, maxLength: 1000, unicode: false),
+                        Datetime = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        SenderId = c.Int(nullable: false),
+                        ChatId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.MessageId)
+                .ForeignKey("dbo.Chats", t => t.ChatId, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.SenderId, cascadeDelete: false)
+                .Index(t => t.SenderId)
+                .Index(t => t.ChatId);
+            
+            CreateTable(
+                "dbo.Chats",
+                c => new
+                    {
+                        ChatId = c.Int(nullable: false, identity: true),
+                        Preview = c.String(nullable: false, maxLength: 30, unicode: false),
+                        Info = c.String(maxLength: 30, unicode: false),
+                    })
+                .PrimaryKey(t => t.ChatId);
+            
+            CreateTable(
+                "dbo.UserChats",
+                c => new
+                    {
+                        UserId = c.Int(nullable: false),
+                        ChatId = c.Int(nullable: false),
+                        WasRemoved = c.Boolean(nullable: false),
+                        ChatName = c.String(),
+                    })
+                .PrimaryKey(t => new { t.UserId, t.ChatId })
+                .ForeignKey("dbo.Chats", t => t.ChatId, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
+                .Index(t => t.UserId)
+                .Index(t => t.ChatId);
             
             CreateTable(
                 "dbo.AspNetUserRoles",
@@ -176,31 +197,61 @@ namespace MarketPlace.WebUI.Migrations
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
+            CreateTable(
+                "dbo.Auction",
+                c => new
+                    {
+                        SaleId = c.Int(nullable: false),
+                        FinishDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                    })
+                .PrimaryKey(t => t.SaleId)
+                .ForeignKey("dbo.Sales", t => t.SaleId)
+                .Index(t => t.SaleId);
+            
+            CreateTable(
+                "dbo.Shop",
+                c => new
+                    {
+                        SaleId = c.Int(nullable: false),
+                        MaxQuantity = c.Short(),
+                    })
+                .PrimaryKey(t => t.SaleId)
+                .ForeignKey("dbo.Sales", t => t.SaleId)
+                .Index(t => t.SaleId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Shop", "SaleId", "dbo.Sales");
+            DropForeignKey("dbo.Auction", "SaleId", "dbo.Sales");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Sales", "ItemId", "dbo.Items");
             DropForeignKey("dbo.Items", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Categories", "ParentId", "dbo.Categories");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Messages", "MessageSenderId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Feedbacks", "FeedbackSenderId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Messages", "SenderId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserChats", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.UserChats", "ChatId", "dbo.Chats");
+            DropForeignKey("dbo.Messages", "ChatId", "dbo.Chats");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Items", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Messages", "MessageReceiverId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Feedbacks", "FeedbackReceiverId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Bids", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Bids", "AuctionId", "dbo.Sales");
+            DropForeignKey("dbo.Bids", "AuctionId", "dbo.Auction");
+            DropIndex("dbo.Shop", new[] { "SaleId" });
+            DropIndex("dbo.Auction", new[] { "SaleId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Categories", new[] { "ParentId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.UserChats", new[] { "ChatId" });
+            DropIndex("dbo.UserChats", new[] { "UserId" });
+            DropIndex("dbo.Messages", new[] { "ChatId" });
+            DropIndex("dbo.Messages", new[] { "SenderId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.Messages", new[] { "MessageReceiverId" });
-            DropIndex("dbo.Messages", new[] { "MessageSenderId" });
             DropIndex("dbo.Feedbacks", new[] { "FeedbackReceiverId" });
             DropIndex("dbo.Feedbacks", new[] { "FeedbackSenderId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -210,11 +261,15 @@ namespace MarketPlace.WebUI.Migrations
             DropIndex("dbo.Items", new[] { "CategoryId" });
             DropIndex("dbo.Items", new[] { "UserId" });
             DropIndex("dbo.Sales", new[] { "ItemId" });
+            DropTable("dbo.Shop");
+            DropTable("dbo.Auction");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Categories");
             DropTable("dbo.AspNetUserRoles");
-            DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.UserChats");
+            DropTable("dbo.Chats");
             DropTable("dbo.Messages");
+            DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.Feedbacks");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.Bids");

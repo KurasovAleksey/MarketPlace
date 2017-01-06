@@ -12,8 +12,8 @@ namespace MarketPlace.WebUI.Models
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<DialogReply> DialogReplies { get; set; }
-        public DbSet<Dialog> Dialogs { get; set; }
+        public DbSet<Message> DialogMessages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Shop> Shops { get; set; }
         public DbSet<Auction> Auctions { get; set; }

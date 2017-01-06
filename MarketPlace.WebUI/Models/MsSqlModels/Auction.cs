@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarketPlace.WebUI.Models
 {
+    [Table("Auction")]
     public class Auction : Sale
     {
         public Auction()

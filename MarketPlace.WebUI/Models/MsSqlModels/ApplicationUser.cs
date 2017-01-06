@@ -38,18 +38,22 @@ namespace MarketPlace.WebUI.Models
         [MaxLength(20)]
         public override string UserName { get; set; }
 
+        [Required]
+        [Column("LastLogin", TypeName = "datetime2")]
+        public DateTime LastLoginDtime { get; set; }
+
+        [Required]
+        [Column("BanStatus", TypeName = "bit")]
+        public bool isBanned { get; set; }
+
 
         public ICollection<Item> Items { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
 
-        [InverseProperty("Creator")]
-        public ICollection<Dialog> CreatedDialogs { get; set; }
+        public ICollection<UserChat> UserChats { get; set; }
 
-        [InverseProperty("Guest")]
-        public ICollection<Dialog> GuestDialogs { get; set; }
-
-        public ICollection<DialogReply> Replies { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
         [InverseProperty("FeedbackSender")]
         public ICollection<Feedback> OutgoingFeedbacks { get; set; }

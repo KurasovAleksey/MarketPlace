@@ -4,14 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MarketPlace.WebUI.Models
 {
-    public class DialogReply
+    public class Message
     {
-        public DialogReply()
+        public Message()
         {
         }
 
         [Key]
-        public int DialogReplyId { get; set; }
+        public int MessageId { get; set; }
 
         [Required]
         [Column(TypeName = "varchar")]
@@ -26,8 +26,8 @@ namespace MarketPlace.WebUI.Models
         [ForeignKey("SenderId")]
         public ApplicationUser Sender { get; set; }
 
-        public int DialogId { get; set; }
-        [ForeignKey("DialogId")]
-        public Dialog Dialog { get; set; }
+        public int ChatId { get; set; }
+        [ForeignKey("ChatId")]
+        public Chat Chat { get; set; }
     }
 }
