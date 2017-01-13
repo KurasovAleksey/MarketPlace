@@ -133,7 +133,7 @@ namespace MarketPlace.WebUI.Controllers
 
         public async Task<ActionResult> Manage()
         {
-            ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+            ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
             if (user != null)
             {
                 return View(user);

@@ -51,9 +51,9 @@ namespace MarketPlace.WebUI.Models
 
         public ICollection<Bid> Bids { get; set; }
 
-        public ICollection<CharMembership> UserChats { get; set; }
+        //public ICollection<CharMembership> UserChats { get; set; }
 
-        public ICollection<Message> Messages { get; set; }
+        //public ICollection<Message> Messages { get; set; }
 
         [InverseProperty("FeedbackSender")]
         public ICollection<Feedback> OutgoingFeedbacks { get; set; }

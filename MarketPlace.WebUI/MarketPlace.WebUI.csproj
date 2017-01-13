@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201701131727019_nvarchar modified.Designer.cs">
       <DependentUpon>201701131727019_nvarchar modified.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701132020137_Test.cs" />
+    <Compile Include="Migrations\201701132020137_Test.Designer.cs">
+      <DependentUpon>201701132020137_Test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
     <Compile Include="Models\Chat.cs" />
@@ -340,6 +344,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701131727019_nvarchar modified.resx">
       <DependentUpon>201701131727019_nvarchar modified.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701132020137_Test.resx">
+      <DependentUpon>201701132020137_Test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

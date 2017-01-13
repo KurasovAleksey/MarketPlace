@@ -22,12 +22,12 @@ namespace MarketPlace.WebUI.Models
         [Column(TypeName = "datetime2")]
         public DateTime Datetime { get; set; }
 
-        public int SenderId { get; set; }
-        [ForeignKey("SenderId")]
-        public ApplicationUser Sender { get; set; }
+        //public int SenderId { get; set; }
+        //[ForeignKey("SenderId")]
+        //public ApplicationUser Sender { get; set; }
 
-        public int ChatId { get; set; }
-        [ForeignKey("ChatId")]
-        public Chat Chat { get; set; }
+        //public int ChatId { get; set; }
+        //[ForeignKey("ChatId")]
+        //public Chat Chat { get; set; }
     }
 }

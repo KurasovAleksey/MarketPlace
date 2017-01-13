@@ -13,15 +13,15 @@ namespace MarketPlace.WebUI.Models
         {
         }
 
-        [Key, Column(Order = 0)]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser User { get; set; }
+        //[Key, Column(Order = 0)]
+        //public int UserId { get; set; }
+        //[ForeignKey("UserId")]
+        //public ApplicationUser User { get; set; }
 
-        [Key, Column(Order = 1)]
-        public int ChatId { get; set; }
-        [ForeignKey("ChatId")]
-        public Chat Chat { get; set; }
+        //[Key, Column(Order = 1)]
+        //public int ChatId { get; set; }
+        //[ForeignKey("ChatId")]
+        //public Chat Chat { get; set; }
 
 
         public bool WasRemoved { get; set; }

@@ -20,30 +20,23 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
         {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
-            const string name = "justaleks97@gmail.com";
-            const string password = "pass7610";
-            const string roleName = "Admin";
-            const string description = "Creates another admin, item categories, user roles";
+            const string roleNameAdmin = "Администратор";
+            const string descriptionAdmin = "Управление полномочиями, модерация, рассмотр жалоб";
+            const string roleNameUser = "Непривилегированный пользователь";
+            const string descriptionUser = "Базовый уровень полномочий: право участия в торгах";
 
-            var role = roleManager.FindByName(roleName);
+
+            var role = roleManager.FindByName(roleNameAdmin);
             if (role == null)
             {
-                role = new ApplicationRole(roleName) { Description = description };
+                role = new ApplicationRole(roleNameAdmin) { Description = descriptionAdmin };
                 var roleresult = roleManager.Create(role);
             }
-
-            var user = userManager.FindByName(name);
-            if (user == null)
+            role = roleManager.FindByName(roleNameUser);
+            if (role == null)
             {
-                user = new ApplicationUser { UserName = name, Email = name };
-                var result = userManager.Create(user, password);
-                result = userManager.SetLockoutEnabled(user.Id, false);
-            }
-
-            var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name))
-            {
-                var result = userManager.AddToRole(user.Id, role.Name);
+                role = new ApplicationRole(roleNameUser) { Description = descriptionUser };
+                var roleresult = roleManager.Create(role);
             }
         }
     }
