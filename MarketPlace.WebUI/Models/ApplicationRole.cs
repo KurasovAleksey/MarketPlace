@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +9,7 @@ namespace MarketPlace.WebUI.Models
         IdentityRole<int, ApplicationUserRole>, 
         IRole<int>
     {
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "nvarchar")]
         [MaxLength(100)]
         [Required]
         public string Description { get; set; }

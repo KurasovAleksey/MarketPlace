@@ -13,11 +13,11 @@ namespace MarketPlace.WebUI.Models
         public int ChatId { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "nvarchar")]
         [MaxLength(30)]
         public string Preview { get; set; }
 
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "nvarchar")]
         [MaxLength(30)]
         public string Info { get; set; }
 

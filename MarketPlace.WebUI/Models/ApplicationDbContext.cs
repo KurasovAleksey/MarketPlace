@@ -12,10 +12,6 @@ namespace MarketPlace.WebUI.Models
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Message> DialogMessages { get; set; }
-        public DbSet<Chat> Chats { get; set; }
-        public DbSet<Sale> Sales { get; set; }
-        public DbSet<Shop> Shops { get; set; }
         public DbSet<Auction> Auctions { get; set; }
 
         public static ApplicationDbContext Create()
@@ -26,7 +22,7 @@ namespace MarketPlace.WebUI.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Sale>().Property(s => s.Price).HasPrecision(16, 4);
+            modelBuilder.Entity<Auction>().Property(a => a.Price).HasPrecision(16, 4);
             modelBuilder.Entity<Bid>().Property(b => b.Amount).HasPrecision(16, 4);
         }
     }

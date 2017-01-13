@@ -16,13 +16,16 @@ namespace MarketPlace.WebUI.Models
 
         [Required]
         [MaxLength(100)]
+        [Column(TypeName = "nvarchar")]
         public string Title { get; set; }
 
         [Required]
         [MaxLength(1000)]
+        [Column(TypeName = "nvarchar")]
         public string Description { get; set; }
 
         [MaxLength(200)]
+        [Column(TypeName = "nvarchar")]
         public string PicturePath { get; set; }
 
         public int UserId { get; set; }
@@ -33,6 +36,6 @@ namespace MarketPlace.WebUI.Models
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
 
-        public ICollection<Sale> Sales { get; set; }
+        public ICollection<Auction> Auctions { get; set; }
     }
 }

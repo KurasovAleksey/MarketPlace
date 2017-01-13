@@ -18,13 +18,13 @@ namespace MarketPlace.WebUI.Models
         }
 
         [Required]
-        [Column("Name", TypeName = "varchar")]
-        [MaxLength(20)]
+        [Column("Name", TypeName = "nvarchar")]
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [Required]
-        [Column("Sname", TypeName = "varchar")]
-        [MaxLength(20)]
+        [Column("Sname", TypeName = "nvarchar")]
+        [MaxLength(50)]
         public string Sname { get; set; }
 
         [Required]
@@ -33,6 +33,7 @@ namespace MarketPlace.WebUI.Models
 
         [Required]
         [MaxLength(20)]
+        [Column("Username", TypeName = "nvarchar")]
         public override string UserName { get; set; }
 
         [Required]

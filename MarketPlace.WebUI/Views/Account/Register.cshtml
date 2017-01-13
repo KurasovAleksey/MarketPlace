@@ -1,73 +1,71 @@
-﻿@model MarketPlace.WebUI.Models.RegisterViewModel
+@model MarketPlace.WebUI.Models.ViewModels.RegisterViewModel
 
 @{
     ViewBag.Title = "Register";
 }
 
-<h2>Регистрация</h2>
-
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
     <div>
         <h4>Регистрация пользователя</h4>
         <hr />
-        @Html.ValidationSummary(false)
-
-        <div>
-            Имя
-            <div>
-                @Html.EditorFor(model => model.Name)
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Фамилия
-            <div>
-                @Html.EditorFor(model => model.Sname)
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Sname, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Sname, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Ваш ник
-            <div>
-                @Html.EditorFor(model => model.UserName)
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Электронный адрес
-            <div>
-                @Html.EditorFor(model => model.Email)
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Телефон
-            <div>
-                @Html.EditorFor(model => model.PhoneNumber)
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Пароль
-            <div>
-                @Html.EditorFor(model => model.Password)
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PasswordConfirm, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
             </div>
         </div>
 
-        <div>
-            Подтвердить пароль
-            <div>
-                @Html.EditorFor(model => model.PasswordConfirm)
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <input type="submit" value="Зарегистрировать" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Зарегистрироваться" />
             </div>
         </div>
     </div>

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System.Security.Claims;
 using MarketPlace.WebUI.Models.AccountModels.Utils;
+using MarketPlace.WebUI.Models.ViewModels;
 
 namespace MarketPlace.WebUI.Controllers
 {
@@ -41,7 +42,7 @@ namespace MarketPlace.WebUI.Controllers
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Manage", "Account");
                 }
                 else
                 {
@@ -125,6 +126,25 @@ namespace MarketPlace.WebUI.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        #endregion
+
+        #region User account
+
+        public async Task<ActionResult> Manage()
+        {
+            ApplicationUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+            if (user != null)
+            {
+                return View(user);
+            }
+            return RedirectToAction("Login", "Account");
+        }
+
+        //public ActionResult LoginPartial()
+        //{
+        //    return PartialView();
+        //}
 
         #endregion
 

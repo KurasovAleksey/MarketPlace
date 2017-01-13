@@ -15,6 +15,7 @@ namespace MarketPlace.WebUI.Models
 
         [Required]
         [MaxLength(300)]
+        [Column(TypeName = "nvarchar")]
         public string Comment { get; set; }
 
         [Required]

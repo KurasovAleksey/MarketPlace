@@ -16,10 +16,12 @@ namespace MarketPlace.WebUI.Models
 
         [Required]
         [MaxLength(50)]
+        [Column(TypeName = "nvarchar")]
         public string Title { get; set; }
 
         [Required]
         [MaxLength(100)]
+        [Column(TypeName = "nvarchar")]
         public string Description { get; set; }
         
         public int? ParentId { get; set; }

@@ -14,7 +14,7 @@ namespace MarketPlace.WebUI.Models
         public int MessageId { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar")]
+        [Column(TypeName = "nvarchar")]
         [MaxLength(1000)]
         public string Text { get; set; }
 
