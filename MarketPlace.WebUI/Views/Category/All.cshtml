@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MarketPlace.WebUI.Models.Category>
+
+@{
+    ViewBag.Title = "Категории";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3>Выберите категорию из дерева для редактирования</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    @BuildCategories(Model)
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
+
+@helper BuildCategories(IEnumerable<MarketPlace.WebUI.Models.Category> list, int? parentId = null)
+{
+var items = list.Where(c => c.ParentId == parentId).OrderBy(c => c.CategoryId);
+if (items.Any())
+{
+        <ul>
+            @foreach (var item in items)
+            {
+                <li>
+                    <a href="#@item.CategoryId.ToString()" data-toggle="collapse">@item.Title</a>
+
+                    <div id=@item.CategoryId.ToString() class="collapse">
+                        @Html.ActionLink("Добавить", "Create", "Category")
+                        | @Html.ActionLink("Подробно", "Details", "Category", new { id = item.CategoryId }, null)
+                        | @Html.ActionLink("Редактировать", "Edit", "Category", new { id = item.CategoryId }, null)
+                        | @Html.ActionLink("Удалить", "Delete", "Category", new { id = item.CategoryId }, null)
+                    </div>
+
+                    @BuildCategories(list, item.CategoryId)
+                </li>
+            }
+        </ul>
+
+}
+}

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,18 +9,19 @@ namespace MarketPlace.WebUI.Models
     {
         public Category()
         {
+            Children = new List<Category>();
         }
 
         [Key]
         public int CategoryId { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Пустое значение недопустимо")]
+        [MaxLength(30, ErrorMessage = "Превышена допустимая длина строки")]
         [Column(TypeName = "nvarchar")]
         public string Title { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Пустое значение недопустимо")]
+        [MaxLength(100, ErrorMessage = "Превышена допустимая длина строки")]
         [Column(TypeName = "nvarchar")]
         public string Description { get; set; }
         
@@ -28,9 +29,9 @@ namespace MarketPlace.WebUI.Models
         [ForeignKey("ParentId")]
         public Category Parent { get; set; }
 
-        public ICollection<Category> Childrens { get; set; }
+        public ICollection<Category> Children { get; set; }
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Auction> Auctions { get; set; }
 
     }
 }

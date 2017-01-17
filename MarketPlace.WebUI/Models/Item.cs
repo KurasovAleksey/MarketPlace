@@ -24,18 +24,18 @@ namespace MarketPlace.WebUI.Models
         [Column(TypeName = "nvarchar")]
         public string Description { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(1000)]
         [Column(TypeName = "nvarchar")]
         public string PicturePath { get; set; }
 
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public ApplicationUser ApplicationUser { get; set; }
+        //public int UserId { get; set; }
+        //[ForeignKey("UserId")]
+        //public ApplicationUser ApplicationUser { get; set; }
 
-        public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        //public int CategoryId { get; set; }
+        //[ForeignKey("CategoryId")]
+        //public Category Category { get; set; }
 
-        public ICollection<Auction> Auctions { get; set; }
+        //public ICollection<Auction> Auctions { get; set; }
     }
 }

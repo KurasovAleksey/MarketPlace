@@ -1,0 +1,19 @@
+﻿@using System.Web.Mvc.Html
+@model IEnumerable<MarketPlace.WebUI.Models.Category>
+
+@helper BuildChild(IEnumerable<MarketPlace.WebUI.Models.Category> list, int? parentId = null)
+{
+var items = list.Where(c => c.ParentId == parentId).OrderBy(c => c.CategoryId);
+if (items.Any())
+{
+        <ul>
+            @foreach (var item in items)
+            {
+                <li>
+                    helper.ActionLink(item.Title, "Details", "Category", new { id = item.CategoryId }, null )
+                    @BuildChild(list, item.CategoryId)
+                </li>
+            }
+        </ul>
+}
+}

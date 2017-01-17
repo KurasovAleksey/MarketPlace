@@ -28,38 +28,33 @@ namespace MarketPlace.WebUI.Models
         public string Sname { get; set; }
 
         [Required]
-        [Column("RegistrationDate", TypeName = "datetime2")]
-        public DateTime RegistrationDate { get; set; }
-
-        [Required]
         [MaxLength(20)]
         [Column("Username", TypeName = "nvarchar")]
         public override string UserName { get; set; }
 
-        [Required]
-        [Column("LastLogin", TypeName = "datetime2")]
-        public DateTime LastLoginDtime { get; set; }
-
-        [Required]
         [Column("BanStatus", TypeName = "bit")]
         public bool isBanned { get; set; }
 
 
 
 
-        public ICollection<Item> Items { get; set; }
+        public ICollection<Auction> Auctions { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
-
-        //public ICollection<CharMembership> UserChats { get; set; }
-
-        //public ICollection<Message> Messages { get; set; }
 
         [InverseProperty("FeedbackSender")]
         public ICollection<Feedback> OutgoingFeedbacks { get; set; }
 
         [InverseProperty("FeedbackReceiver")]
         public ICollection<Feedback> IncomingFeedbacks { get; set; }
+
+
+
+        [InverseProperty("Sender")]
+        public ICollection<Complaint> OutgoingComplaints { get; set; }
+
+        [InverseProperty("Violator")]
+        public ICollection<Complaint> Violations { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(

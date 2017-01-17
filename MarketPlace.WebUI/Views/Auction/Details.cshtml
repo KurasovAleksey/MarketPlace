@@ -1,0 +1,95 @@
+﻿@model MarketPlace.WebUI.Models.Auction
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Подробности";
+}
+
+<h4>Подробности</h4>
+
+<div>
+    <h4>Аукцион</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Information)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Information)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PicturePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PicturePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinishDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinishDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.Identity.Name == Model.User.UserName)
+    {
+        @Html.ActionLink("Остановить", "Finish", new { id = Model.AuctionId })
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.AuctionId })
+    }
+    @Html.ActionLink("Back to List", "All")
+</p>

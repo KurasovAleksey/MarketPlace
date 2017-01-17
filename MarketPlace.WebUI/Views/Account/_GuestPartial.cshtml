@@ -1,0 +1,35 @@
+﻿@model MarketPlace.WebUI.Models.ApplicationUser
+
+<div class="row">
+    <div class="col-sm-6">
+        <p>
+            Просмотрите текущие аукционы пользователя @Html.DisplayFor(model => model.UserName)
+            чтобы найти интересующий вас лот
+        <p>
+        <p>@Html.ActionLink("Перейти", "All", "Auction", new { id = Model.Id }, null)</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <p>
+            Перед сотрудничеством с пользователем @Html.DisplayFor(model => model.UserName)
+            рекомендуем прочесть отзывы о нем от других пользователей или напишите собственный отзыв
+        </p>
+        <p>@Html.ActionLink("Перейти", "All", "Feedback", new { id = Model.Id }, null)</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <p>
+            Оставьте жалобу на пользователя @Html.DisplayFor(model => model.UserName),
+            и администрация обязательно рассмотрит её!
+        </p>
+        <p>@Html.ActionLink("Оставить жалобу", "All", "Feedback", new { id = Model.Id }, null)</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <p>@Html.ActionLink("Заблокировать пользователя", "All", "Feedback", new { id = Model.Id }, null)</p>
+        }
+    </div>
+</div>

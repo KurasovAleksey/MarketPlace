@@ -11,7 +11,7 @@ namespace MarketPlace.WebUI.Models
     {
         public ApplicationUserRole()
         {
-
+            StartDate = DateTime.Today;
         }
 
         [Column("StartDate", TypeName = "datetime2")]

@@ -19,6 +19,9 @@ namespace MarketPlace.WebUI.Models
         [Column("Datetime", TypeName = "datetime2")]
         public DateTime Datetime { get; set; }
 
+        [Column("IsFinalBid", TypeName = "bit")]
+        public bool IsFinalBid { get; set; }
+
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }

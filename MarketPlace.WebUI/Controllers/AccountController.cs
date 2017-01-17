@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using System.Security.Claims;
 using MarketPlace.WebUI.Models.AccountModels.Utils;
 using MarketPlace.WebUI.Models.ViewModels;
+using System.Net;
 
 namespace MarketPlace.WebUI.Controllers
 {
@@ -18,11 +19,20 @@ namespace MarketPlace.WebUI.Controllers
     {
         #region Register
 
+
         private ApplicationUserManager UserManager
         {
             get
             {
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+        }
+
+        private IEnumerable<ApplicationRole> Roles
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.AsEnumerable();
             }
         }
 
@@ -37,12 +47,13 @@ namespace MarketPlace.WebUI.Controllers
             if (ModelState.IsValid)
             {
                 ApplicationUser user = new ApplicationUser { Name = model.Name, Sname = model.Sname, UserName = model.UserName, 
-				Email = model.Email, RegistrationDate = DateTime.Now, PhoneNumber = model.PhoneNumber};
+				Email = model.Email, PhoneNumber = model.PhoneNumber};
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     await SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Manage", "Account");
+                    return RedirectToAction("Users", "Account", new { userName = user.UserName });
                 }
                 else
                 {
@@ -79,7 +90,8 @@ namespace MarketPlace.WebUI.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				ApplicationUser user = await UserManager.FindAsync(model.Email, model.Password);
+                string userName = (await UserManager.FindByEmailAsync(model.Email)).UserName;
+                ApplicationUser user = await UserManager.FindAsync(userName, model.Password);
 				if (user == null)
 				{
 					ModelState.AddModelError("", "Неверный логин или пароль.");
@@ -88,16 +100,17 @@ namespace MarketPlace.WebUI.Controllers
 				{
                     await SignInAsync(user, isPersistent: false);
                     if (String.IsNullOrEmpty(returnUrl))
-						return RedirectToAction("Index", "Home");
+						return RedirectToAction("Users", "Account", new { userName = userName });
 					return Redirect(returnUrl);
 				}
 			}
 			ViewBag.returnUrl = returnUrl;
 			return View(model);
 		}
-		public ActionResult Logout()
+
+        public ActionResult Logout()
 		{
-			AuthenticationManager.SignOut();
+            AuthenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
@@ -131,20 +144,20 @@ namespace MarketPlace.WebUI.Controllers
 
         #region User account
 
-        public async Task<ActionResult> Manage()
+        public async Task<ActionResult> Users(string userName)
         {
-            ApplicationUser user = await UserManager.FindByNameAsync(User.Identity.Name);
-            if (user != null)
-            {
-                return View(user);
-            }
-            return RedirectToAction("Login", "Account");
-        }
+            if(userName == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        //public ActionResult LoginPartial()
-        //{
-        //    return PartialView();
-        //}
+            ApplicationUser user = await UserManager.FindByNameAsync(userName);
+            if (user == null)
+                return HttpNotFound();
+            
+            int topRoleId = user.Roles.LastOrDefault().RoleId;
+            ViewBag.Role = (from role in Roles where role.Id == topRoleId select role.Name).FirstOrDefault();
+            ViewBag.RegDate = String.Format("{0:d}", user.Roles.FirstOrDefault().StartDate);
+            return View(user);
+        }
 
         #endregion
 
