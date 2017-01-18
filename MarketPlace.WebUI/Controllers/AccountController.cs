@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Linq.SqlClient;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -12,11 +13,14 @@ using System.Security.Claims;
 using MarketPlace.WebUI.Models.AccountModels.Utils;
 using MarketPlace.WebUI.Models.ViewModels;
 using System.Net;
+using System.Data.Entity;
 
 namespace MarketPlace.WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         #region Register
 
 
@@ -159,6 +163,67 @@ namespace MarketPlace.WebUI.Controllers
             return View(user);
         }
 
+        public async Task<ActionResult> List()
+        {
+            
+            IQueryable<UserViewModel> usersList = null;
+            
+            {
+                usersList = (from user in db.Users
+                            select new UserViewModel()
+                            {
+                                Id = user.Id,
+                                Name = user.Name,
+                                Sname = user.Sname,
+                                UserName = user.UserName,
+                                PhoneNumber = user.PhoneNumber,
+                                Email = user.Email,
+                                IsBanned = user.isBanned
+                            });
+            }
+
+            ViewBag.CurrentPage = 1;
+            ViewBag.LastPage = Math.Ceiling(Convert.ToDouble(usersList.ToList().Count) / 1);
+
+            var userManager = UserManager;
+            var usersListAc = await usersList.Take(1).ToListAsync();
+            foreach (var user in usersListAc)
+            {
+                bool r = userManager.IsInRole(user.Id, "Admin");
+                user.TopRole = r ? "Admin" : "User";
+            }
+                
+            userManager.Dispose();
+            return View(usersListAc);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> List(int CurrentPage, int LastPage)
+        {
+            var b = User.Identity.IsAuthenticated;
+            var usersList = (from user in db.Users
+                         select new UserViewModel()
+                         {
+                             Id = user.Id,
+                             Name = user.Name,
+                             Sname = user.Sname,
+                             UserName = user.UserName,
+                             PhoneNumber = user.PhoneNumber,
+                             Email = user.Email,
+                             IsBanned = user.isBanned
+                         }).OrderBy(u => u.Id).Skip((CurrentPage - 1) * 1).Take(1);
+
+            ViewBag.CurrentPage = CurrentPage;
+
+            var userManager = UserManager;
+            foreach (var user in usersList)
+                user.TopRole = userManager.IsInRole(user.Id, "Admin") ? "Admin" : "User";
+            return PartialView("_ListUsers", await usersList.ToListAsync());
+        }
+
+
+
         #endregion
 
         #region Edit user
@@ -218,5 +283,14 @@ namespace MarketPlace.WebUI.Controllers
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

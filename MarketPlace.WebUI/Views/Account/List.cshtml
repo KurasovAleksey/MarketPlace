@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MarketPlace.WebUI.Models.ViewModels.UserViewModel>
+
+@{
+    ViewBag.Title = "Список пользователей";
+}
+
+<h2>List</h2>
+
+@Scripts.Render("~/scripts/jquery-3.1.1.min.js")
+@Scripts.Render("~/scripts/jquery.unobtrusive-ajax.min.js")
+<div class="row">
+    <div class="col-md-6">
+        @using (Ajax.BeginForm("List", null, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "ListUsersDiv" }, new { id = "form" }))
+        {
+            @Html.AntiForgeryToken();
+            <input type="hidden" id="CurrentPage" name="CurrentPage" value="@ViewBag.CurrentPage" />
+            <input type="hidden" id="LastPage" name="LastPage" value="@ViewBag.LastPage" />
+        }
+        <input class="btn btn-primary" type="button" id="Previous" value="Previous" />
+        <input class="btn btn-primary" type="button" id="Next" value="Next" />
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="ListUsersDiv">
+            @Html.Partial("_ListUsers", Model)
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#Previous").click(function () {
+            if (CalculateAndSetPage("Previous"))
+                $("#form").submit();
+        });
+        $("#Next").click(function () {
+            if (CalculateAndSetPage("Next"))
+                $("#form").submit();
+        });
+    });
+
+    function CalculateAndSetPage(movingType) {
+        var currentPage = parseInt($("#CurrentPage").val());
+        var lastPage = parseInt($("#LastPage").val());
+
+        if (currentPage == 1 && movingType == "Previous")
+            return false;
+        if (currentPage == lastPage && movingType == "Next")
+            return false;
+
+        if (movingType == "Previous") {
+            currentPage--;
+        }
+        else if (movingType == "Next") {
+            currentPage++;
+        }
+        else
+            alert("Something wrong!");
+
+        $("#CurrentPage").val(currentPage)
+
+        return true;
+    }
+</script>
+
