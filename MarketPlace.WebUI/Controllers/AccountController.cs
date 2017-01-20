@@ -19,6 +19,7 @@ namespace MarketPlace.WebUI.Controllers
 {
     public class AccountController : Controller
     {
+        static int paginationDiv = 10;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         #region Register
@@ -100,6 +101,10 @@ namespace MarketPlace.WebUI.Controllers
 				{
 					ModelState.AddModelError("", "Неверный логин или пароль.");
 				}
+                else if (user.isBanned)
+                {
+                    ModelState.AddModelError("", "Вы были заблокированы по решению администрации.");
+                }
 				else
 				{
                     await SignInAsync(user, isPersistent: false);
@@ -163,66 +168,78 @@ namespace MarketPlace.WebUI.Controllers
             return View(user);
         }
 
-        public async Task<ActionResult> List()
+        #endregion
+
+        #region UserPaging
+
+        [HttpGet]
+        public async Task<ActionResult> List(string userName = "")
         {
-            
+
             IQueryable<UserViewModel> usersList = null;
-            
+
             {
                 usersList = (from user in db.Users
-                            select new UserViewModel()
-                            {
-                                Id = user.Id,
-                                Name = user.Name,
-                                Sname = user.Sname,
-                                UserName = user.UserName,
-                                PhoneNumber = user.PhoneNumber,
-                                Email = user.Email,
-                                IsBanned = user.isBanned
-                            });
+                             where user.Name.Contains(userName) || user.Sname.Contains(userName)
+                             select new UserViewModel()
+                             {
+                                 Id = user.Id,
+                                 Name = user.Name,
+                                 Sname = user.Sname,
+                                 UserName = user.UserName,
+                                 PhoneNumber = user.PhoneNumber,
+                                 Email = user.Email,
+                                 IsBanned = user.isBanned
+                             });
             }
 
             ViewBag.CurrentPage = 1;
-            ViewBag.LastPage = Math.Ceiling(Convert.ToDouble(usersList.ToList().Count) / 1);
+            ViewBag.LastPage = Math.Ceiling(Convert.ToDouble(usersList.ToList().Count) / paginationDiv);
 
             var userManager = UserManager;
-            var usersListAc = await usersList.Take(1).ToListAsync();
+            var usersListAc = await usersList.Take(paginationDiv).ToListAsync();
             foreach (var user in usersListAc)
             {
                 bool r = userManager.IsInRole(user.Id, "Admin");
                 user.TopRole = r ? "Admin" : "User";
             }
-                
+
             userManager.Dispose();
             return View(usersListAc);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> List(int CurrentPage, int LastPage)
+        public async Task<ActionResult> List(int CurrentPage, int LastPage, string userName = "")
         {
-            var b = User.Identity.IsAuthenticated;
             var usersList = (from user in db.Users
-                         select new UserViewModel()
-                         {
-                             Id = user.Id,
-                             Name = user.Name,
-                             Sname = user.Sname,
-                             UserName = user.UserName,
-                             PhoneNumber = user.PhoneNumber,
-                             Email = user.Email,
-                             IsBanned = user.isBanned
-                         }).OrderBy(u => u.Id).Skip((CurrentPage - 1) * 1).Take(1);
+                             where user.Name.Contains(userName) || user.Sname.Contains(userName)
+                             select new UserViewModel()
+                             {
+                                 Id = user.Id,
+                                 Name = user.Name,
+                                 Sname = user.Sname,
+                                 UserName = user.UserName,
+                                 PhoneNumber = user.PhoneNumber,
+                                 Email = user.Email,
+                                 IsBanned = user.isBanned
+                             }).OrderBy(u => u.Id)
+                             .Skip((CurrentPage - 1) * paginationDiv)
+                             .Take(paginationDiv);
 
             ViewBag.CurrentPage = CurrentPage;
 
             var userManager = UserManager;
-            foreach (var user in usersList)
-                user.TopRole = userManager.IsInRole(user.Id, "Admin") ? "Admin" : "User";
-            return PartialView("_ListUsers", await usersList.ToListAsync());
+            var usersListAc = await usersList.ToListAsync();
+            foreach (var user in usersListAc)
+            {
+                bool r = userManager.IsInRole(user.Id, "Admin");
+                user.TopRole = r ? "Admin" : "User";
+            }
+
+            userManager.Dispose();
+            return PartialView("_ListUsers", usersListAc);
         }
-
-
 
         #endregion
 
@@ -263,6 +280,58 @@ namespace MarketPlace.WebUI.Controllers
 
             return View(model);
         }
+
+        //Edit permissions
+
+        public ActionResult EditUserRole(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            int intId = id.Value;
+            ApplicationUser user = UserManager.FindById(intId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            if (UserManager.IsInRole(intId, "Admin")) UserManager.RemoveFromRole(intId, "Admin");
+            else UserManager.AddToRoles(intId, "Admin");
+            IdentityResult result = UserManager.Update(user);
+            if (!result.Succeeded)
+                ModelState.AddModelError("", "Что-то пошло не так");
+            return View("List");
+        }
+
+        public ActionResult EditUserBan(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ApplicationUser user = UserManager.FindById(id.Value);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            user.isBanned = !user.isBanned;
+            if(user.isBanned)
+            {
+                UserManager.RemoveFromRole(user.Id, "User");
+                if (UserManager.IsInRole(user.Id, "Admin"))
+                    UserManager.RemoveFromRole(user.Id, "Admin");
+            }
+            else {
+                if (!UserManager.IsInRole(user.Id, "User"))
+                    UserManager.AddToRole(user.Id, "User");
+            }
+            IdentityResult result = UserManager.Update(user);
+            if (!result.Succeeded)
+                ModelState.AddModelError("", "Что-то пошло не так");
+            return View("List");
+        }
+
+
 
         #endregion
 

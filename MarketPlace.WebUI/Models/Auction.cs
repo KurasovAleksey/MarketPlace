@@ -28,7 +28,6 @@ namespace MarketPlace.WebUI.Models
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
         [Column(TypeName = "nvarchar")]
         [MaxLength(400)]
         public string Information { get; set; }
@@ -49,9 +48,13 @@ namespace MarketPlace.WebUI.Models
         public Category Category { get; set; }
 
         [Required]
+        [Column("IsNationalCurrency")]
+        public bool IsNationalCurrency { get; set; }
+
+        [Required]
         [Column("FinishDate", TypeName = "datetime2")]
         public DateTime FinishDate { get; set; }
 
-        ICollection<Bid> Bids { get; set; }
+        public ICollection<Bid> Bids { get; set; }
     }
 }

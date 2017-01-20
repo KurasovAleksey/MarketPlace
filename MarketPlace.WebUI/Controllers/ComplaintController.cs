@@ -10,120 +10,113 @@ using MarketPlace.WebUI.Models;
 
 namespace MarketPlace.WebUI.Controllers
 {
-    public class BidController : Controller
+    public class ComplaintController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Bid
+        // GET: Complaint
         public ActionResult Index()
         {
-            var bids = db.Bids.Include(b => b.Auction).Include(b => b.User);
-            return View(bids.ToList());
+            var complaints = db.Complaints.Include(c => c.Sender).Include(c => c.Violator).Where(c => !c.isProcessed);
+            return View(complaints.ToList());
         }
 
-        public ActionResult List(int? id)
-        {
-            var bids = db.Bids.Include(b => b.User);
-            bids = bids.Where(b => b.AuctionId == id.Value);
-            return View(bids.ToList());
-        }
 
-        // GET: Bid/Details/5
+
+        // GET: Complaint/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bid bid = db.Bids.Find(id);
-            if (bid == null)
+            Complaint complaint = db.Complaints.Find(id);
+            if (complaint == null)
             {
                 return HttpNotFound();
             }
-            return View(bid);
+            return View(complaint);
         }
 
-        // GET: Bid/Create
+        // GET: Complaint/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Bid/Create
+        // POST: Complaint/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BidId,Amount,Datetime,IsFinalBid,UserId,AuctionId")] Bid bid)
+        public ActionResult Create([Bind(Include = "ComplaintId,Text,Datetime,isProcessed,SenderId,ViolatorId")] Complaint complaint)
         {
-            bid.Datetime = DateTime.Now;
             if (ModelState.IsValid)
             {
-                var lastBid = db.Bids.Where(b => b.AuctionId == bid.AuctionId).LastOrDefault();
-                if(lastBid.UserId == bid.UserId || lastBid.Amount > bid.Amount)
-                    return RedirectToAction("Details", "Auction", new { bid.AuctionId });
-                db.Bids.Add(bid);
+                db.Complaints.Add(complaint);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Auction", new { bid.AuctionId });
+                return RedirectToAction("Index");
             }
 
-          
-            return View(bid);
+           
+            return View(complaint);
         }
 
-        // GET: Bid/Edit/5
+        // GET: Complaint/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bid bid = db.Bids.Find(id);
-            if (bid == null)
+            Complaint complaint = db.Complaints.Find(id);
+            if (complaint == null)
             {
                 return HttpNotFound();
             }
-            return View(bid);
+        
+            return View(complaint);
         }
 
-        // POST: Bid/Edit/5
+        // POST: Complaint/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BidId,Amount,Datetime,IsFinalBid,UserId,AuctionId")] Bid bid)
+        public ActionResult Edit([Bind(Include = "ComplaintId,Text,Datetime,isProcessed,SenderId,ViolatorId")] Complaint complaint)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bid).State = EntityState.Modified;
+                db.Entry(complaint).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(bid);
+       
+            return View(complaint);
         }
 
-        // GET: Bid/Delete/5
+        // GET: Complaint/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Bid bid = db.Bids.Find(id);
-            if (bid == null)
+            Complaint complaint = db.Complaints.Find(id);
+            if (complaint == null)
             {
                 return HttpNotFound();
             }
-            return View(bid);
+            return View(complaint);
         }
 
-        // POST: Bid/Delete/5
+        // POST: Complaint/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Bid bid = db.Bids.Find(id);
-            db.Bids.Remove(bid);
+            Complaint complaint = db.Complaints.Find(id);
+            db.Complaints.Remove(complaint);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -13,7 +13,9 @@ namespace MarketPlace.WebUI.Models
         [Key]
         public int BidId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите размер ставки")]
+        [Display(Name = "Размер ставки")]
+        [Range(0.02, 1000000000)]
         public decimal Amount { get; set; }
 
         [Column("Datetime", TypeName = "datetime2")]

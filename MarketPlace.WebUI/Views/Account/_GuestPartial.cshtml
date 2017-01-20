@@ -6,7 +6,7 @@
             Просмотрите текущие аукционы пользователя @Html.DisplayFor(model => model.UserName)
             чтобы найти интересующий вас лот
         <p>
-        <p>@Html.ActionLink("Перейти", "All", "Auction", new { id = Model.Id }, null)</p>
+        <p>@Html.ActionLink("Перейти", "List", "Auction", new { userName = Model.UserName }, null)</p>
     </div>
 </div>
 
@@ -16,7 +16,7 @@
             Перед сотрудничеством с пользователем @Html.DisplayFor(model => model.UserName)
             рекомендуем прочесть отзывы о нем от других пользователей или напишите собственный отзыв
         </p>
-        <p>@Html.ActionLink("Перейти", "All", "Feedback", new { id = Model.Id }, null)</p>
+        <p>@Html.ActionLink("Перейти", "List", "Feedback", new { userName = Model.UserName }, null)</p>
     </div>
 </div>
 
@@ -26,10 +26,10 @@
             Оставьте жалобу на пользователя @Html.DisplayFor(model => model.UserName),
             и администрация обязательно рассмотрит её!
         </p>
-        <p>@Html.ActionLink("Оставить жалобу", "All", "Feedback", new { id = Model.Id }, null)</p>
+        <p>@Html.ActionLink("Оставить жалобу", "Create", "Complaint", new { userName = Model.UserName }, null)</p>
         @if (User.IsInRole("Admin"))
         {
-            <p>@Html.ActionLink("Заблокировать пользователя", "All", "Feedback", new { id = Model.Id }, null)</p>
+            <p>@Html.ActionLink("Заблокировать пользователя", "All", "Feedback", new { userName = Model.UserName }, null)</p>
         }
     </div>
 </div>

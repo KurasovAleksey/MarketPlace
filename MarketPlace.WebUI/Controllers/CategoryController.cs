@@ -37,6 +37,8 @@ namespace MarketPlace.WebUI.Controllers
             return View(category);
         }
 
+        
+
         // GET: Category/Create
         public ActionResult Create()
         {
@@ -130,4 +132,6 @@ namespace MarketPlace.WebUI.Controllers
             base.Dispose(disposing);
         }
     }
+
+    
 }

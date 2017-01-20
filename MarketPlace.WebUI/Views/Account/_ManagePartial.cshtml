@@ -2,9 +2,9 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <h3>Ваши лоты</h3>
-        <p>Создавайте и редактируйте лоты для будущих аукционов </p>
-        <p>@Html.ActionLink("Перейти к странице лотов", "All", "Item", new { id = Model.Id }, null)</p>
+        <h3>Ваши аукционы</h3>
+        <p>Создайте аукцион и разместите ваш лот</p>
+        <p>@Html.ActionLink("Обзор ваших аукционов", "List", "Auction", new { userName = Model.UserName }, null)</p>
     </div>
     @if (User.IsInRole("Admin"))
     {
@@ -17,9 +17,9 @@
 </div>
 <div class="row">
     <div class="col-sm-6">
-        <h3>Ваши аукционы</h3>
-        <p>Создайте аукцион и разместите ваш лот</p>
-        <p>@Html.ActionLink("Обзор ваших аукционов", "All", "Auction", new { id = Model.Id }, null)</p>
+        <h3>Редактировать страницу</h3>
+        <p>Измените ваши данные в случае необходимости</p>
+        <p>@Html.ActionLink("Редактировать", "Edit", "Account", null)</p>
     </div>
     @if (User.IsInRole("Admin"))
     {
@@ -32,23 +32,19 @@
 </div>
 <div class="row">
     <div class="col-sm-6">
-        <h3>Редактировать страницу</h3>
-        <p>Измените ваши данные в случае необходимости</p>
-        <p>@Html.ActionLink("Редактировать", "Edit", "Account", new { id = Model.Id }, null)</p>
+        <h3>Отзывы</h3>
+        <p>Отзывы от других пользователей о вашей деятельности на сайте</p>
+        <p>@Html.ActionLink("Перейти к отзывам", "List", "Feedback", new { userName = Model.UserName }, null)</p>
     </div>
     @if (User.IsInRole("Admin"))
     {
         <div class="col-sm-6">
             <h3>Жалобы</h3>
             <p>Рассмотрение жалоб пользователей</p>
-            <p>@Html.ActionLink("Перейти к жалобам", "All", "Complaint")</p>
+            <p>@Html.ActionLink("Перейти к жалобам", "List", "Complaint")</p>
         </div>
     }
 </div>
 <div class="row">
-    <div class="col-sm-6">
-        <h3>Отзывы</h3>
-        <p>Отзывы от других пользователей о вашей деятельности на сайте</p>
-        <p>@Html.ActionLink("Перейти к отзывам", "All", "Feedback", new { id = Model.Id }, null)</p>
-    </div>
+    
 </div>

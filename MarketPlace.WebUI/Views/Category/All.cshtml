@@ -5,7 +5,7 @@
 }
 
 <!DOCTYPE html>
-
+@Scripts.Render("~/scripts/jquery-3.1.1.min.js")
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -39,11 +39,11 @@ if (items.Any())
             @foreach (var item in items)
             {
                 <li>
-                    <a href="#@item.CategoryId.ToString()" data-toggle="collapse">@item.Title</a>
+                    <a href="#@item.CategoryId" data-toggle="collapse">@item.Title</a>
 
-                    <div id=@item.CategoryId.ToString() class="collapse">
+                    <div id="@item.CategoryId" class="collapse">
+                        @item.Description <br/>
                         @Html.ActionLink("Добавить", "Create", "Category")
-                        | @Html.ActionLink("Подробно", "Details", "Category", new { id = item.CategoryId }, null)
                         | @Html.ActionLink("Редактировать", "Edit", "Category", new { id = item.CategoryId }, null)
                         | @Html.ActionLink("Удалить", "Delete", "Category", new { id = item.CategoryId }, null)
                     </div>

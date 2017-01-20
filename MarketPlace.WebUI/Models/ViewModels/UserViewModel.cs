@@ -30,5 +30,7 @@ namespace MarketPlace.WebUI.Models.ViewModels
 
         [Display(Name = "Уровень")]
         public string TopRole { get; set; }
+
+        public string RoleId { get; set; }
     }
 }

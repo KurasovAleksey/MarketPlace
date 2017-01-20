@@ -15,27 +15,34 @@
                 <h1></h1>
             </div>
         </div>
-            <div class="row">
-                <div class="col-sm-2"></div>
-                <div class="col-sm-4">
-                    <p>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Sname)</p>
-                    <p>@Html.DisplayFor(model => model.Email) </p>
-                </div>
-                <div class="col-sm-6">
-                    <p>Зарегистрирован с @ViewBag.RegDate </p>
-                    <p>@ViewBag.Role</p>
-                </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+                <p>@Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Sname)</p>
+                <p>@Html.DisplayFor(model => model.Email) </p>
             </div>
-
-            @if (Model.UserName == User.Identity.Name)
-            {
-                @Html.Partial("_ManagePartial", Model)
-            }
-            else
-            {
-                @Html.Partial("_GuestPartial", Model)
-            }
-
+            <div class="col-sm-4">
+                <p>Зарегистрирован с @ViewBag.RegDate </p>
+                <p>@ViewBag.Role</p>
+            </div>
+            <div class="col-sm-4">
+                @if (Model.isBanned)
+                { <p> Забанен </p> }
+            </div>
         </div>
+
+
+        @if (Model.UserName == User.Identity.Name)
+        {
+        @Html.Partial("_ManagePartial", Model)
+        }
+        else
+        {
+        @Html.Partial("_GuestPartial", Model)
+        }
+
+
+
+    </div>
 </body>
 </html>

@@ -7,13 +7,13 @@ namespace MarketPlace.WebUI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Initializerfirst : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initializerfirst));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701140725030_Initializer first"; }
+            get { return "201701200242125_Initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -226,49 +226,20 @@
     <Compile Include="Controllers\AuctionController.cs" />
     <Compile Include="Controllers\BidController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ComplaintController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Migrations\201701140725030_Initializer first.cs" />
-    <Compile Include="Migrations\201701140725030_Initializer first.Designer.cs">
-      <DependentUpon>201701140725030_Initializer first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701142223135_Bid.cs" />
-    <Compile Include="Migrations\201701142223135_Bid.Designer.cs">
-      <DependentUpon>201701142223135_Bid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701151409131_User.cs" />
-    <Compile Include="Migrations\201701151409131_User.Designer.cs">
-      <DependentUpon>201701151409131_User.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701151554129_User1.cs" />
-    <Compile Include="Migrations\201701151554129_User1.Designer.cs">
-      <DependentUpon>201701151554129_User1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701161201499_User2.cs" />
-    <Compile Include="Migrations\201701161201499_User2.Designer.cs">
-      <DependentUpon>201701161201499_User2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701171616249_Category.cs" />
-    <Compile Include="Migrations\201701171616249_Category.Designer.cs">
-      <DependentUpon>201701171616249_Category.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701171619339_Category1.cs" />
-    <Compile Include="Migrations\201701171619339_Category1.Designer.cs">
-      <DependentUpon>201701171619339_Category1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701171902138_RemoveItem.cs" />
-    <Compile Include="Migrations\201701171902138_RemoveItem.Designer.cs">
-      <DependentUpon>201701171902138_RemoveItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701171927527_Complains.cs" />
-    <Compile Include="Migrations\201701171927527_Complains.Designer.cs">
-      <DependentUpon>201701171927527_Complains.cs</DependentUpon>
+    <Compile Include="Migrations\201701200242125_Initial.cs" />
+    <Compile Include="Migrations\201701200242125_Initial.Designer.cs">
+      <DependentUpon>201701200242125_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
+    <Compile Include="Models\AccountModels\Utils\DateTimePicker.cs" />
     <Compile Include="Models\Chat.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -279,6 +250,7 @@
     <Compile Include="Models\AccountModels\Utils\ApplicationUserStore.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationSignInManager.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\ViewModels\AuctionViewModel.cs" />
     <Compile Include="Models\ViewModels\EditViewModel.cs" />
     <Compile Include="Models\AccountModels\IdentityModels.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
@@ -317,7 +289,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="App_Code\CategoryChildHelper.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
@@ -371,49 +342,37 @@
     <Content Include="Views\Auction\Finish.cshtml" />
     <Content Include="Views\Auction\Details.cshtml" />
     <Content Include="Views\Auction\Edit.cshtml" />
-    <Content Include="Views\Auction\Index.cshtml" />
-    <Content Include="Views\Bid\Create.cshtml" />
-    <Content Include="Views\Bid\Delete.cshtml" />
-    <Content Include="Views\Bid\Details.cshtml" />
-    <Content Include="Views\Bid\Edit.cshtml" />
-    <Content Include="Views\Bid\Index.cshtml" />
+    <Content Include="Views\Auction\List.cshtml" />
     <Content Include="Views\Account\List.cshtml" />
     <Content Include="Views\Account\_ListUsers.cshtml" />
+    <Content Include="Views\Bids\Create.cshtml" />
+    <Content Include="Views\Bids\Delete.cshtml" />
+    <Content Include="Views\Bids\Details.cshtml" />
+    <Content Include="Views\Bids\Edit.cshtml" />
+    <Content Include="Views\Bids\Index.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Feedback\Delete.cshtml" />
+    <Content Include="Views\Feedback\Details.cshtml" />
+    <Content Include="Views\Feedback\Edit.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Complaint\Create.cshtml" />
+    <Content Include="Views\Complaint\Delete.cshtml" />
+    <Content Include="Views\Complaint\Details.cshtml" />
+    <Content Include="Views\Complaint\Edit.cshtml" />
+    <Content Include="Views\Complaint\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701140725030_Initializer first.resx">
-      <DependentUpon>201701140725030_Initializer first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701142223135_Bid.resx">
-      <DependentUpon>201701142223135_Bid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701151409131_User.resx">
-      <DependentUpon>201701151409131_User.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701151554129_User1.resx">
-      <DependentUpon>201701151554129_User1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701161201499_User2.resx">
-      <DependentUpon>201701161201499_User2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701171616249_Category.resx">
-      <DependentUpon>201701171616249_Category.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701171619339_Category1.resx">
-      <DependentUpon>201701171619339_Category1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701171902138_RemoveItem.resx">
-      <DependentUpon>201701171902138_RemoveItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701171927527_Complains.resx">
-      <DependentUpon>201701171927527_Complains.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701200242125_Initial.resx">
+      <DependentUpon>201701200242125_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
