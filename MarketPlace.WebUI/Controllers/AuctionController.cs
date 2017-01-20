@@ -18,21 +18,31 @@ namespace MarketPlace.WebUI.Controllers
 
         // Users Auctions
         // GET: Auction
-        public async Task<ActionResult> List(string userName = "", string auctTitle = "", string categoryTitle = "")
+        public ActionResult List(string user, int? category, string search)
         {
-            var auctions = db.Auctions
-                .Where(a => a.User.UserName.Contains(userName))
-                .Where(a => a.Title.Contains(auctTitle))
-                .Include(a => a.Category)
-                .Where(a => a.Category.Title.Contains(categoryTitle));
-            var list = await auctions.ToListAsync();
-            foreach (var a in list)
+            ViewBag.User = user;
+
+            IQueryable<Auction> auctions = db.Auctions
+                .Include(a => a.User)
+                .Include(a => a.Category);
+
+            if (category != null && category != 0)
+                auctions = auctions.Where(a => a.CategoryId == category);
+            if (user != null && user != "")
+                auctions = auctions.Where(a => a.User.UserName == user);
+            if (search != null && search != "")
+                auctions = auctions.Where(a => a.Title.Contains(search));
+
+            List<Category> categories = db.Categories.ToList();
+            categories.Insert(0, new Category { Title = "Все", CategoryId = 0 });
+
+            AuctionListViewModel alvm = new AuctionListViewModel()
             {
-                a.Description = a.Description.Substring(0,10) + "...";
-                a.Information = string.IsNullOrEmpty(a.Information)
-                    ? " " : a.Information.Substring(0,10) + "...";
-            }
-            return View(list);
+                Auctions = auctions.ToList(),
+                Categories = new SelectList(categories, "CategoryId", "Title")
+            };
+
+            return View(alvm);
         }
 
         // GET: Auction/Details/5
@@ -61,7 +71,6 @@ namespace MarketPlace.WebUI.Controllers
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Title");
-            ViewBag.Currence = new SelectList(new List<object>() { new { Title = "Гривна", CurrId = 1 }, new { Title = "Доллар", CurrId = 2 } }, "CurrId", "Title");
             return View();
         }
 
@@ -70,7 +79,7 @@ namespace MarketPlace.WebUI.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AuctionViewModel auction)
+        public async Task<ActionResult> Create(AuctionCreateModel auction)
         {
            
             if (ModelState.IsValid)
@@ -116,7 +125,7 @@ namespace MarketPlace.WebUI.Controllers
             db.Entry(auction).State = EntityState.Modified;
             await db.SaveChangesAsync();
 
-            AuctionViewModel auctionShort = new AuctionViewModel
+            AuctionCreateModel auctionShort = new AuctionCreateModel
             {
                 AuctionID = auction.AuctionId,
                 CategoryId = auction.CategoryId,
@@ -139,7 +148,7 @@ namespace MarketPlace.WebUI.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AuctionViewModel auction)
+        public async Task<ActionResult> Edit(AuctionCreateModel auction)
         {
             Auction auctionFull = await db.Auctions.FindAsync(auction.AuctionID);
             if (auction == null)

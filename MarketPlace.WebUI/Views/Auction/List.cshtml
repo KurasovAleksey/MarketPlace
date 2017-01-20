@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MarketPlace.WebUI.Models.Auction>
+﻿@model MarketPlace.WebUI.Models.ViewModels.AuctionListViewModel
 
 @{
     ViewBag.Title = "Аукционы";
@@ -9,33 +9,31 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<form method="get">
+    <div class="form-control inline">
+        
+        <input type="text" name="search" placeholder="Поиск" class="form-control">
+        <input type="hidden" name="user" value="@ViewBag.User">
+        <label class="control-label">Категория: </label>
+        @Html.DropDownList("category", Model.Categories as SelectList,
+                    htmlAttributes: new { @class = "form-control" })
+
+        <input type="submit" value="Фильтр" class="btn btn-default" />
+    </div>
+</form>
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.Title)
-        </th>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Information)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FinishDate)
-        </th>
-        <th>
-
-        </th>
+        <th>Название</th>
+        <th>Категория</th>
+        <th>Описание</th>
+        <th>Цена</th>
+        <th>Заканчивается</th>
+        <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Auctions) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
@@ -50,9 +48,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.Price)
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Information)
         </td>
         <td>
             @item.FinishDate.ToString()

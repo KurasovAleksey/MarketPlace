@@ -4,7 +4,7 @@
     <div class="col-sm-6">
         <h3>Ваши аукционы</h3>
         <p>Создайте аукцион и разместите ваш лот</p>
-        <p>@Html.ActionLink("Обзор ваших аукционов", "List", "Auction", new { userName = Model.UserName }, null)</p>
+        <p>@Html.ActionLink("Обзор ваших аукционов", "List", "Auction", new { user = Model.UserName }, null)</p>
     </div>
     @if (User.IsInRole("Admin"))
     {
@@ -19,7 +19,7 @@
     <div class="col-sm-6">
         <h3>Редактировать страницу</h3>
         <p>Измените ваши данные в случае необходимости</p>
-        <p>@Html.ActionLink("Редактировать", "Edit", "Account", new )</p>
+        <p>@Html.ActionLink("Редактировать", "Edit", "Account")</p>
     </div>
     @if (User.IsInRole("Admin"))
     {

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MarketPlace.WebUI.Models.ViewModels
 {
-    public class AuctionViewModel
+    public class AuctionCreateModel
     {
         public int AuctionID { get; set; }
 

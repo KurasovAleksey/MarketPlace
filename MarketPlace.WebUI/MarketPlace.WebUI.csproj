@@ -250,7 +250,8 @@
     <Compile Include="Models\AccountModels\Utils\ApplicationUserStore.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationSignInManager.cs" />
     <Compile Include="Models\Complaint.cs" />
-    <Compile Include="Models\ViewModels\AuctionViewModel.cs" />
+    <Compile Include="Models\ViewModels\AuctionCreateModel.cs" />
+    <Compile Include="Models\ViewModels\AuctionListViewModel.cs" />
     <Compile Include="Models\ViewModels\EditViewModel.cs" />
     <Compile Include="Models\AccountModels\IdentityModels.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />

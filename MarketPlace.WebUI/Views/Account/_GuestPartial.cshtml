@@ -6,7 +6,7 @@
             Просмотрите текущие аукционы пользователя @Html.DisplayFor(model => model.UserName)
             чтобы найти интересующий вас лот
         <p>
-        <p>@Html.ActionLink("Перейти", "List", "Auction", new { userName = Model.UserName }, null)</p>
+        <p>@Html.ActionLink("Перейти", "List", "Auction", new { user = Model.UserName }, null)</p>
     </div>
 </div>
 
