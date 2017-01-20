@@ -13,7 +13,7 @@ namespace MarketPlace.WebUI.Models
         [Key]
         public int FeedbackId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Напишите отзыв")]
         [MaxLength(300)]
         [Column(TypeName = "nvarchar")]
         public string Comment { get; set; }

@@ -35,6 +35,8 @@ namespace MarketPlace.WebUI.Controllers
             {
                 return HttpNotFound();
             }
+            db.Entry(complaint).Reference("Sender").Load();
+            db.Entry(complaint).Reference("Violator").Load();
             return View(complaint);
         }
 

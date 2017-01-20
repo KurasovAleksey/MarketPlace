@@ -16,15 +16,17 @@ namespace MarketPlace.WebUI.Models
         [Key]
         public int ComplaintId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Опишите ситуацию")]
         [MaxLength(300)]
         [Column(TypeName = "nvarchar")]
+        [Display(Name = "Текст")]
         public string Text { get; set; }
 
         [Required]
         [Column(TypeName = "datetime2")]
         public DateTime Datetime { get; set; }
 
+        [Display(Name = "Рассмотрено")]
         [Column("BanStatus", TypeName = "bit")]
         public bool isProcessed { get; set; }
 

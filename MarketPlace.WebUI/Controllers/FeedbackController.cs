@@ -15,9 +15,9 @@ namespace MarketPlace.WebUI.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Feedback
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
-            var feedbacks = db.Feedbacks.Include(f => f.FeedbackReceiver).Include(f => f.FeedbackSender);
+            var feedbacks = db.Feedbacks.Include(f => f.FeedbackSender).Where(f => f.FeedbackReceiverId == id);
             return View(feedbacks.ToList());
         }
 

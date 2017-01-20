@@ -21,6 +21,7 @@ namespace MarketPlace.WebUI.Models
         [Column("Datetime", TypeName = "datetime2")]
         public DateTime Datetime { get; set; }
 
+        [Display(Name = "Победитель")]
         [Column("IsFinalBid", TypeName = "bit")]
         public bool IsFinalBid { get; set; }
 

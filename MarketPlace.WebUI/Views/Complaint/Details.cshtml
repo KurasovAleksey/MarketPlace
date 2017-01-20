@@ -11,11 +11,12 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            
             @Html.DisplayNameFor(model => model.Sender.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Sender.Name)
+            @Html.ActionLink(Model.Sender.UserName, "Users", "Account", new { userName= Model.Sender.UserName }, null)
         </dd>
 
         <dt>

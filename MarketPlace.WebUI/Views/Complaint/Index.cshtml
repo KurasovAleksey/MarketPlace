@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MarketPlace.WebUI.Models.Complaint>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Жалобы";
 }
 
 <h2>Index</h2>
@@ -47,8 +47,7 @@
             @Html.DisplayFor(modelItem => item.isProcessed)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ComplaintId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ComplaintId })
+            @Html.ActionLink("Подробнее", "Details", new { id=item.ComplaintId })
         </td>
     </tr>
 }
