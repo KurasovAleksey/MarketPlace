@@ -10,5 +10,6 @@ namespace MarketPlace.WebUI.Models.ViewModels
     {
         public IEnumerable<Auction> Auctions { get; set; }
         public SelectList Categories { get; set; }
+        public PageInfo PageInfo { get; set; }
     }
 }

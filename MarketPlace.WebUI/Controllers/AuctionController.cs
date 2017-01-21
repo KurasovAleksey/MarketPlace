@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using MarketPlace.WebUI.Models;
 using MarketPlace.WebUI.Models.ViewModels;
+using PagedList;
 
 namespace MarketPlace.WebUI.Controllers
 {
@@ -18,30 +19,44 @@ namespace MarketPlace.WebUI.Controllers
 
         // Users Auctions
         // GET: Auction
-        public ActionResult List(string user, int? category, string search)
+        public ActionResult List(string user, int? category, string search, int page = 1)
         {
-            ViewBag.User = user;
+            int pageSize = 10;
 
-            IQueryable<Auction> auctions = db.Auctions
+            ViewBag.User = user;
+            ViewBag.Search = search;
+            ViewBag.Category = category;
+
+            IEnumerable<Auction> auctions = db.Auctions
                 .Include(a => a.User)
                 .Include(a => a.Category);
 
+            IEnumerable<Auction> auctionsPerPage = null;
+
             if (category != null && category != 0)
-                auctions = auctions.Where(a => a.CategoryId == category);
-            if (user != null && user != "")
-                auctions = auctions.Where(a => a.User.UserName == user);
-            if (search != null && search != "")
-                auctions = auctions.Where(a => a.Title.Contains(search));
+                auctionsPerPage = auctions.Where(a => a.CategoryId == category)
+                    .Skip((page - 1) * pageSize).Take(pageSize);
+            if (!String.IsNullOrEmpty(user))
+                auctionsPerPage = auctions.Where(a => a.User.UserName == user)
+                    .Skip((page - 1) * pageSize).Take(pageSize);
+            if (!String.IsNullOrEmpty(search))
+                auctionsPerPage = auctions.Where(a => a.Title.Contains(search))
+                    .Skip((page - 1) * pageSize).Take(pageSize);
 
             List<Category> categories = db.Categories.ToList();
             categories.Insert(0, new Category { Title = "Все", CategoryId = 0 });
 
+            PageInfo pageInfo = new PageInfo
+            { PageNumber = page, PageSize = pageSize, TotalItems = auctions.ToList().Count };
+
             AuctionListViewModel alvm = new AuctionListViewModel()
             {
-                Auctions = auctions.ToList(),
-                Categories = new SelectList(categories, "CategoryId", "Title")
+                Auctions = auctionsPerPage,
+                Categories = new SelectList(categories, "CategoryId", "Title"),
+                PageInfo = pageInfo
             };
 
+            
             return View(alvm);
         }
 

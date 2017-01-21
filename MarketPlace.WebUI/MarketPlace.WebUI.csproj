@@ -141,6 +141,10 @@
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Portable.Licensing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.Licensing.1.1.0\lib\portable-net40+sl4+wp7+win8\Portable.Licensing.dll</HintPath>
       <Private>True</Private>
@@ -232,6 +236,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Migrations\201701200242125_Initial.cs" />
     <Compile Include="Migrations\201701200242125_Initial.Designer.cs">
@@ -250,6 +255,7 @@
     <Compile Include="Models\AccountModels\Utils\ApplicationUserStore.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationSignInManager.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\ViewModels\AuctionCreateModel.cs" />
     <Compile Include="Models\ViewModels\AuctionListViewModel.cs" />
     <Compile Include="Models\ViewModels\EditViewModel.cs" />

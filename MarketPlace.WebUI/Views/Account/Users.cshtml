@@ -6,7 +6,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Личный кабинет</title>
+    @if (Model.UserName == User.Identity.Name)
+    {
+        <title>Личный кабинет</title>
+    }
 </head>
 <body>
     <div class="container">
@@ -30,7 +33,6 @@
                 { <p> Забанен </p> }
             </div>
         </div>
-
 
         @if (Model.UserName == User.Identity.Name)
         {

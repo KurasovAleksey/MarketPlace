@@ -62,7 +62,6 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
             var userList = new[] {
                 new
                 {
-                    UserName = "PashaT",
                     User = new ApplicationUser
                     {
                         Name = "Павел",
@@ -71,11 +70,10 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "pasha.trop@gmail.com",
                         PhoneNumber = "0938095566"
                     },
-                    Password = "Pasha1"
+                    Password = "Password1"
                 },
                 new
                 {
-                    UserName = "Yurka97",
                     User = new ApplicationUser
                     {
                         Name = "Юра",
@@ -84,11 +82,10 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "Pavlov.Yura@mail.ru",
                         PhoneNumber = "0972907656"
                     },
-                    Password = "Yurka1"
+                    Password = "Password1"
                 },
                 new
                 {
-                    UserName = "Primarch40k",
                     User = new ApplicationUser
                     {
                         Name = "Лев",
@@ -97,11 +94,10 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "lionAlJonhson@gmail.com",
                         PhoneNumber = "0637897645"
                     },
-                    Password = "Primarch1"
+                    Password = "Password1"
                 },
                 new
                 {
-                    UserName = "FleaSeller",
                     User = new ApplicationUser
                     {
                         Name = "Михаил",
@@ -110,11 +106,10 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "mishaVersh@mail.ru",
                         PhoneNumber = "0578903443"
                     },
-                    Password = "Flea22Flea"
+                    Password = "Password1"
                 },
                 new
                 {
-                    UserName = "AlexKopach",
                     User = new ApplicationUser
                     {
                         Name = "Александр",
@@ -123,11 +118,10 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "Ryazanov@rambler.ru",
                         PhoneNumber = "0674903212"
                     },
-                    Password = "Kopach200"
+                    Password = "Password1"
                 },
                 new
                 {
-                    UserName = "Faust41",
                     User = new ApplicationUser
                     {
                         Name = "Андрей",
@@ -136,14 +130,523 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Email = "andrew.macov@gmail.com",
                         PhoneNumber = "0667895412"
                     },
-                    Password = "Anno1941"
+                    Password = "Password1"
                 },
 
-            }.ToList();
+
+
+                new
+                {
+                    User = new ApplicationUser
+                    {
+                        Name = "Иван",
+                        Sname = "Орлов",
+                        UserName = "BonoboJohn",
+                        Email = "ivan.orlov@gmail.com",
+                        PhoneNumber = "0667895412"
+                    },
+                    Password = "Password1"
+                },
+
+                new
+                {
+                    User = new ApplicationUser
+                    {
+                        Name = "Сергей",
+                        Sname = "Рак",
+                        UserName = "RustStalker",
+                        Email = "ivan.orlov@gmail.com",
+                        PhoneNumber = "0667895410"
+                    },
+                    Password = "Password1"
+                },
+
+                new
+                {
+                    User = new ApplicationUser
+                    {
+                        Name = "Юлия",
+                        Sname = "Подгородная",
+                        UserName = "julka23",
+                        Email = "Julia.Podgorod@gmail.com",
+                        PhoneNumber = "0667895411"
+                    },
+                    Password = "Password1"
+                },
+
+                new
+                {
+                    User = new ApplicationUser
+                    {
+                        Name = "Аркадий",
+                        Sname = "Пушкин",
+                        UserName = "julka23",
+                        Email = "arkashaPush@gmail.com",
+                        PhoneNumber = "0667895411"
+                    },
+                    Password = "Password1"
+                },
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+                //new
+                //{
+                //    User = new ApplicationUser
+                //    {
+                //        Name = "Юлия",
+                //        Sname = "Подгородная",
+                //        UserName = "julka23",
+                //        Email = "Julia.Podgorod@gmail.com",
+                //        PhoneNumber = "0667895411"
+                //    },
+                //    Password = "Password1"
+                //},
+
+            };
 
             foreach (var user in userList)
             {
-                var temp = userManager.FindByName(user.UserName);
+                var temp = userManager.FindByName(user.User.UserName);
                 if (temp == null)
                 {
                     temp = user.User;
@@ -152,6 +655,8 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                     var roleResult = userManager.AddToRole(temp.Id, "User");
                 }
             }
+
+
 
             var categoryList = new List<Category>
             {
