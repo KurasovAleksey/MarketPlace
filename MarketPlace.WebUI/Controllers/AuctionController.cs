@@ -10,6 +10,8 @@ using System.Web.Mvc;
 using MarketPlace.WebUI.Models;
 using MarketPlace.WebUI.Models.ViewModels;
 using PagedList;
+using System.IO;
+using System.Drawing;
 
 namespace MarketPlace.WebUI.Controllers
 {
@@ -19,9 +21,10 @@ namespace MarketPlace.WebUI.Controllers
 
         // Users Auctions
         // GET: Auction
+        [AllowAnonymous]
         public ActionResult List(string user, int? category, string search, int page = 1)
         {
-            int pageSize = 10;
+            int pageSize = 1;
 
             ViewBag.User = user;
             ViewBag.Search = search;
@@ -31,17 +34,13 @@ namespace MarketPlace.WebUI.Controllers
                 .Include(a => a.User)
                 .Include(a => a.Category);
 
-            IEnumerable<Auction> auctionsPerPage = null;
-
-            if (category != null && category != 0)
-                auctionsPerPage = auctions.Where(a => a.CategoryId == category)
-                    .Skip((page - 1) * pageSize).Take(pageSize);
             if (!String.IsNullOrEmpty(user))
-                auctionsPerPage = auctions.Where(a => a.User.UserName == user)
-                    .Skip((page - 1) * pageSize).Take(pageSize);
+                auctions = auctions.Where(a => a.User.UserName == user);
+            if (category != null && category != 0)
+                auctions = auctions.Where(a => a.CategoryId == category);
             if (!String.IsNullOrEmpty(search))
-                auctionsPerPage = auctions.Where(a => a.Title.Contains(search))
-                    .Skip((page - 1) * pageSize).Take(pageSize);
+                auctions = auctions.Where(a => a.Title.Contains(search));
+            IEnumerable<Auction> auctionsPerPage = auctions.Skip((page - 1) * pageSize).Take(pageSize);
 
             List<Category> categories = db.Categories.ToList();
             categories.Insert(0, new Category { Title = "Все", CategoryId = 0 });
@@ -52,15 +51,15 @@ namespace MarketPlace.WebUI.Controllers
             AuctionListViewModel alvm = new AuctionListViewModel()
             {
                 Auctions = auctionsPerPage,
-                Categories = new SelectList(categories, "CategoryId", "Title"),
+                Categories = new SelectList(categories, "CategoryId", "Title", category),
                 PageInfo = pageInfo
             };
 
-            
             return View(alvm);
         }
 
         // GET: Auction/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -75,6 +74,8 @@ namespace MarketPlace.WebUI.Controllers
             db.Entry(auction).Reference("User").Load();
             db.Entry(auction).Collection("Bids").Load();
             db.Entry(auction).Reference("Category").Load();
+            foreach (var bid in auction.Bids)
+                db.Entry(bid).Reference("User").Load();
             ViewBag.Currency = (auction.IsNationalCurrency) 
                 ? Currency.UAH.ToString() 
                 : Currency.USD.ToString();
@@ -82,7 +83,23 @@ namespace MarketPlace.WebUI.Controllers
             return View(auction);
         }
 
+        public FilePathResult GetImage(int Auction)
+        {
+            Auction auction = db.Auctions
+                .FirstOrDefault(a => a.AuctionId == Auction);
+
+            if (auction != null)
+            {
+                return File(auction.PicturePath, auction.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         // GET: Auction/Create
+        [Authorize(Roles = "User")]
         public ActionResult Create()
         {
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Title");
@@ -94,7 +111,8 @@ namespace MarketPlace.WebUI.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AuctionCreateModel auction)
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult> Create(AuctionCreateModel auction, HttpPostedFileBase uploadImage = null)
         {
            
             if (ModelState.IsValid)
@@ -115,9 +133,20 @@ namespace MarketPlace.WebUI.Controllers
                     Title = auction.Title
                 };
 
+                if(uploadImage != null)
+                {
+                    string filePath = "~/Files/" + System.IO.Path.GetFileName(uploadImage.FileName);
+                    auctionFull.PicturePath = filePath;
+                    auctionFull.ImageMimeType = uploadImage.ContentType;
+                    uploadImage.SaveAs(Server.MapPath(filePath));
+                    Bitmap bmp = (Bitmap)Bitmap.FromFile(filePath);
+                    bmp.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    bmp.Save(Server.MapPath(filePath));
+                }
+
                 db.Auctions.Add(auctionFull);
                 await db.SaveChangesAsync();
-                return RedirectToAction("List", new { userName = userName });
+                return RedirectToAction("List", new { user = userName });
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Title", auction.CategoryId);
@@ -125,6 +154,7 @@ namespace MarketPlace.WebUI.Controllers
         }
 
         // GET: Auction/Edit/5
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -163,7 +193,8 @@ namespace MarketPlace.WebUI.Controllers
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(AuctionCreateModel auction)
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult> Edit(AuctionCreateModel auction, HttpPostedFileBase image = null)
         {
             Auction auctionFull = await db.Auctions.FindAsync(auction.AuctionID);
             if (auction == null)
@@ -179,17 +210,34 @@ namespace MarketPlace.WebUI.Controllers
                 auctionFull.Information = auction.Information;
                 auctionFull.IsNationalCurrency = auction.Currency == "USD" ? false : true;
                 auctionFull.Price = auction.Price;
-               
+
+                if (image != null)
+                {
+                    if (auctionFull.PicturePath != null)
+                    {
+                        FileInfo fi = new FileInfo(auctionFull.PicturePath);
+                        if (fi.Exists) fi.Delete();
+                    }
+
+                    string filePath = "~/Files/" + System.IO.Path.GetFileName(image.FileName);
+                    auctionFull.PicturePath = filePath;
+                    auctionFull.ImageMimeType = image.ContentType;
+                    image.SaveAs(Server.MapPath(filePath));
+                    //Bitmap bmp = (Bitmap)Bitmap.FromFile(Server.MapPath(filePath));
+                    //bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    //bmp.Save(Server.MapPath(filePath));
+                }
 
                 db.Entry(auctionFull).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("All");
+                return RedirectToAction("Details", new { id = auctionFull.AuctionId });
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Title", auction.CategoryId);
             return View(auction);
         }
 
         // GET: Auction/Delete/5
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> Finish(int? id)
         {
             if (id == null)
@@ -207,13 +255,14 @@ namespace MarketPlace.WebUI.Controllers
         // POST: Auction/Delete/5
         [HttpPost, ActionName("FinishConfirmed")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User")]
         public async Task<ActionResult> FinishConfirmed(int id)
         {
             Auction auction = await db.Auctions.FindAsync(id);
             auction.FinishDate = DateTime.Now;
             db.Entry(auction).State = EntityState.Modified;
             await db.SaveChangesAsync();
-            return RedirectToAction("All");
+            return RedirectToAction("List", new { user = User.Identity.Name });
         }
 
         protected override void Dispose(bool disposing)

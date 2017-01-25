@@ -1,7 +1,7 @@
 @model MarketPlace.WebUI.Models.ViewModels.LoginViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Вход";
 }
 
 <div class="row">
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <p>
-                    @Html.ActionLink("Регистрация нового пользователя", "Register")
+                    @Html.ActionLink("Регистрация нового пользователя", "Register", new { @class = "btn btn-default" })
                 </p>
             }
         </section>

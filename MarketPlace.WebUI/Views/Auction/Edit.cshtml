@@ -1,18 +1,18 @@
-﻿@model MarketPlace.WebUI.Models.ViewModels.AuctionViewModel
+﻿@model MarketPlace.WebUI.Models.ViewModels.AuctionCreateModel
 @using MarketPlace.WebUI.Models.ViewModels
 
 @{
     ViewBag.Title = "Редактирование аукциона";
 }
 
-<h2>Edit</h2>
+<h2>Редактирование аукциона</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Auction",
+        FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Auction</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.AuctionID)
@@ -61,7 +61,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CategoryId, "Категория", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
@@ -77,13 +77,28 @@
         </div>
 
         <div class="form-group">
+            <div style="position:relative;">
+                <label>Изображение</label>
+                <a class='btn' href='javascript:;'>
+                    Выберите файл...
+                    <input type="file" name="Image" size="40"
+                           style="position:absolute;z-index:2;top:0;
+                                left:0;filter: alpha(opacity=0); opacity:0;
+                                background-color:transparent;color:transparent;"
+                           onchange='$("#upload-file-info").html($(this).val());'>
+                </a>
+                <span class='label label-info' id="upload-file-info"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Сохранить" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Обратно", "Details", new { id=Model.AuctionID })
 </div>

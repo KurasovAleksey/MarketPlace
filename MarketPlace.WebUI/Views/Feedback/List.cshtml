@@ -1,0 +1,122 @@
+﻿@model IEnumerable<MarketPlace.WebUI.Models.Feedback>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Отзывы";
+}
+
+
+@Html.ActionLink("Обратно на страницу пользователя", "Users", "Account", new { userName = ViewBag.Receiver }, null)
+
+
+@if (User.Identity.Name != ViewBag.Receiver)
+{
+    <div class="row">
+        <h2>Отзывы о пользователе @ViewBag.Receiver</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <p>Напишите свой собственный отзыв!</p>
+            @using (Html.BeginForm("Create", "Feedback", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+
+                    @Html.TextArea("Comment", new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.Hidden("FeedbackReceiverId", (int)ViewBag.ReceiverId)
+                    @Html.Hidden("FeedbackSenderId", User.Identity.GetUserId())
+                    <br />
+
+                    <input type="submit" value="Отправить отзыв" class="btn btn-default" />
+                </div>
+            }
+        </div>
+
+        <div class="col-md-3">
+            <p>Оставить жалобу</p>
+            @using (Html.BeginForm("Create", "Complaint", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+
+                    @Html.TextArea("Text")
+
+                    @Html.Hidden("ViolatorId", (int)ViewBag.ReceiverId)
+                    @Html.Hidden("SenderId", User.Identity.GetUserId())
+                    <br />
+
+                    <input type="submit" value="Отправить жалобу" class="btn btn-default" />
+                </div>
+            }
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="row">
+        <h2>Отзывы</h2>
+    </div>
+}
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        @if (Model.Any())
+        {
+            <table class="table">
+                <tr>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.FeedbackSender.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Datetime)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @Html.ActionLink(item.FeedbackSender.UserName, "Users", "Account", new { userName = item.FeedbackSender.UserName }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comment)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Datetime)
+                        </td>
+                        <td>
+                            @if (User.Identity.Name == item.FeedbackSender.UserName)
+                            {
+                                using (Html.BeginForm("Delete", "Feedback", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("Id", item.FeedbackId)
+                                    <div class="form-actions no-color">
+                                        <input type="submit" value="Удалить" class="btn btn-default" />
+                                    </div>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        } else
+        {
+            <p class="text-center">Отзывов не найдено</p>
+        }
+    </div>
+</div>

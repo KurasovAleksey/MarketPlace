@@ -18,8 +18,8 @@ namespace MarketPlace.WebUI.Models
         [Range(0.02, 1000000000)]
         public decimal Amount { get; set; }
 
-        [Column("Datetime", TypeName = "datetime2")]
-        public DateTime Datetime { get; set; }
+        [Column("Time", TypeName = "datetime2")]
+        public DateTime Time { get; set; }
 
         [Display(Name = "Победитель")]
         [Column("IsFinalBid", TypeName = "bit")]

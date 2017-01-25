@@ -8,6 +8,7 @@ namespace MarketPlace.WebUI.Models
     {
         public Feedback()
         {
+            Datetime = DateTime.Now;
         }
 
         [Key]
@@ -16,9 +17,11 @@ namespace MarketPlace.WebUI.Models
         [Required(ErrorMessage ="Напишите отзыв")]
         [MaxLength(300)]
         [Column(TypeName = "nvarchar")]
+        [Display(Name = "Отзыв")]
         public string Comment { get; set; }
 
         [Required]
+        [Display(Name = "Время")]
         public DateTime Datetime { get; set; }
 
         public int FeedbackSenderId { get; set; }

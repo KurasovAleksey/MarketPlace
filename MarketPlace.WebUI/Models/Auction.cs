@@ -39,6 +39,8 @@ namespace MarketPlace.WebUI.Models
         [Column(TypeName = "nvarchar")]
         public string PicturePath { get; set; }
 
+        public string ImageMimeType { get; set; }
+
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
@@ -54,6 +56,10 @@ namespace MarketPlace.WebUI.Models
         [Required]
         [Column("FinishDate", TypeName = "datetime2")]
         public DateTime FinishDate { get; set; }
+
+       
+        [Column("IsFinished", TypeName = "bit")]
+        public bool IsFinished { get; set; }
 
         public ICollection<Bid> Bids { get; set; }
     }

@@ -20,20 +20,25 @@ namespace MarketPlace.WebUI.Models
         [Required]
         [Column("Name", TypeName = "nvarchar")]
         [MaxLength(50)]
+        [Display(Name = "Имя")]
         public string Name { get; set; }
 
         [Required]
         [Column("Sname", TypeName = "nvarchar")]
         [MaxLength(50)]
+        [Display(Name = "Фамилия")]
         public string Sname { get; set; }
 
         [Required]
         [MaxLength(20)]
         [Column("Username", TypeName = "nvarchar")]
+        [Display(Name = "Никнейм")]
         public override string UserName { get; set; }
 
         [Column("BanStatus", TypeName = "bit")]
+        [Display(Name = "Бан")]
         public bool isBanned { get; set; }
+
 
 
 

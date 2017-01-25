@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MarketPlace.WebUI.Models;
+using System.Data.Entity.Infrastructure;
 
 namespace MarketPlace.WebUI.Controllers
 {
+    [Authorize(Roles = "User")]
     public class BidController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -46,6 +48,7 @@ namespace MarketPlace.WebUI.Controllers
         // GET: Bid/Create
         public ActionResult Create()
         {
+            ViewBag.BidError = "";
             return View();
         }
 
@@ -56,19 +59,28 @@ namespace MarketPlace.WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BidId,Amount,Datetime,IsFinalBid,UserId,AuctionId")] Bid bid)
         {
-            bid.Datetime = DateTime.Now;
+            bid.Time = DateTime.Now;
             if (ModelState.IsValid)
             {
-                var lastBid = db.Bids.Where(b => b.AuctionId == bid.AuctionId).LastOrDefault();
-                if(lastBid.UserId == bid.UserId || lastBid.Amount > bid.Amount)
-                    return RedirectToAction("Details", "Auction", new { bid.AuctionId });
                 db.Bids.Add(bid);
-                db.SaveChanges();
-                return RedirectToAction("Details", "Auction", new { bid.AuctionId });
+                try
+                {
+                    db.SaveChanges();
+                } catch(DbUpdateException)
+                {
+                    db.Bids.Remove(bid);
+                    ViewBag.AuctionId = bid.AuctionId;
+                    return View("BidCreatingError");
+                }
+                
             }
+            return RedirectToAction("Details", "Auction", new { id = bid.AuctionId });
+        }
 
-          
-            return View(bid);
+        public ViewResult BidCreatingError(int auctionId)
+        {
+            ViewBag.AuctionId = auctionId;
+            return View();
         }
 
         // GET: Bid/Edit/5

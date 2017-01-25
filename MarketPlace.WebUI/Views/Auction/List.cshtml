@@ -5,66 +5,81 @@
     ViewBag.Title = "Аукционы";
 }
 
-<h2>Index</h2>
-
+@if((ViewBag.User as string) != "" && (ViewBag.User as string) == User.Identity.Name)
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Создать новый аукцион", "Create", new { @class="btn btn-default" })
 </p>
-
-<div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, x => Url.Action("List", new { page = x }))
-</div>
 
 <br />
 
-<form method="get">
-    <div class="form-control inline">
-        
-        @Html.TextBox("search", ViewBag.Search as String, new { @class = "form-control", placeholder = "Поиск" })
-        
-        @*<input type="text" name="search" placeholder="Поиск" class="form-control">*@
-        <input type="hidden" name="user" value="@ViewBag.User">
-        <label class="control-label">Категория: </label>
-        @Html.DropDownList("category", Model.Categories as SelectList,
-                    htmlAttributes: new { @class = "form-control" })
+<div class="row">
+    @using (Html.BeginForm("List", "Auction", FormMethod.Post, new { @class = "form-inline", role = "form" }))
+    {
+        <div class="form-group">
+            @Html.TextBox("search", ViewBag.Search as String,
+                new { @class = "form-control", placeholder = "Поиск" })
 
-        <input type="submit" value="Поиск" class="btn btn-default" />
-    </div>
-</form>
+            <input type="hidden" id="auctionOwner" name="user" value="@ViewBag.User">
+            <label class="control-label">Категория: </label>
+            @Html.DropDownList("category", Model.Categories as SelectList,
+                     htmlAttributes: new { @class = "form-control" })
 
-<table class="table">
-    <tr>
-        <th>Название</th>
-        <th>Категория</th>
-        <th>Описание</th>
-        <th>Цена</th>
-        <th>Заканчивается</th>
-        <th></th>
-    </tr>
+            <input type="submit" value="Поиск" class="btn btn-default" />
+        </div>
+    }
 
-@foreach (var item in Model.Auctions) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Title)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.Description))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
+    
+</div>
 
-        </td>
-        <td>
-            @item.FinishDate.ToString()
-        </td>
-        <td>
-            @Html.ActionLink("Подробнее", "Details", new { id=item.AuctionId }) |
-        </td>
-    </tr>
-}
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>Название</th>
+            <th>Изображение</th>
+            <th>Категория</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Заканчивается</th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model.Auctions)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.PicturePath != null)
+                    {
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Content(item.PicturePath)" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Title)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+
+                </td>
+                <td>
+                    @item.FinishDate.ToString()
+                </td>
+                <td>
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.AuctionId }) |
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, 
+    x => Url.Action("List", new { user=ViewBag.User, category=ViewBag.Category, search=ViewBag.Search, page = x }))
+</div>

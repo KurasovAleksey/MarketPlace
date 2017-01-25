@@ -1,7 +1,7 @@
 ﻿@model MarketPlace.WebUI.Models.Category
 
 @{
-    ViewBag.Title = "Редактирование категории";
+    ViewBag.Title = "Удаление категории";
 }
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Удаление</title>
 </head>
 <body>
     <h3>Вы действительно хотите удалить данную категорию?</h3>
@@ -47,7 +47,7 @@
     
             <div class="form-actions no-color">
                 <input type="submit" value="Удалить" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "All")
+                @Html.ActionLink("Обратно к списку категорий", "All")
             </div>
         }
     </div>

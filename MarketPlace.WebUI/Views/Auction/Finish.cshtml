@@ -4,9 +4,9 @@
     ViewBag.Title = "Остановка аукциона";
 }
 
-<h2>Delete</h2>
+<h2>Остановка</h2>
 
-<h3>Вы действительно хотите остановить аукцион?</h3>
+<h3>Вы действительно хотите прервать аукцион?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -32,8 +32,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" />
+            @Html.ActionLink("Обратно", "Details", new { id = Model.AuctionId }, new { @class = "btn btn-default" })
         </div>
     }
 </div>

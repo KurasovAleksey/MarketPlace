@@ -11,6 +11,7 @@ namespace MarketPlace.WebUI.Models
     {
         public Complaint()
         {
+            Datetime = DateTime.Now;
         }
 
         [Key]

@@ -8,11 +8,24 @@
 <h4>Подробности</h4>
 
 <div>
-    <h4>Аукцион</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>@Html.DisplayNameFor(model => model.Title)</dt>
         <dd>@Html.DisplayFor(model => model.Title)</dd>
+
+        <dt><label>Изображение</label></dt>
+        <dd>
+            @if (Model.PicturePath == null)
+            {
+                <img class="img-thumbnail" width="400" height="300"
+                     src="@Url.Content("~/Files/no_photo.png") />
+            }
+            else
+            {
+                <img class="img-thumbnail" width="400" height="300"
+                     src="@Url.Content(Model.PicturePath)" />
+            }
+        </dd>
 
         <dt>@Html.DisplayNameFor(model => model.Category.Title)</dt>
         <dd>@Html.DisplayFor(model => model.Category.Title)</dd>
@@ -36,14 +49,8 @@
 
     </dl>
 </div>
-<p>
-
-    @Html.ActionLink("Back to List", "All")
-</p>
 <div class="row">
-    <div class="col-md-12">
-        @*@Ajax.ActionLink("Обновить", "List", "Bid", new { id = Model.AuctionId },
-            new AjaxOptions { UpdateTargetId = "BidList" }, new { @class = "btn btn-default" })*@
+    <div class="col-md-offset-4 col-md-6">
         @if (User.Identity.Name == Model.User.UserName)
         {
             @Html.ActionLink("Остановить", "Finish", new { id = Model.AuctionId }, new { @class = "btn btn-default" })
@@ -54,22 +61,25 @@
         }
         else
         {
-            using (Html.BeginForm("Create", "Bid", FormMethod.Post))
+            using (Html.BeginForm("Create", "Bid", FormMethod.Post, new { @class = "form-inline", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.Hidden("AuctionId", @Model.AuctionId);
-                @Html.Hidden("UserId", @Model.UserId);
-                @Html.TextBox("Amount", "Размер ставки")
-                <input type="submit" name="Ставка!" />
+                <div class="form-group">
+                    @Html.Hidden("AuctionId", @Model.AuctionId);
+                    @Html.Hidden("UserId", User.Identity.GetUserId());
+                    @Html.TextBox("Amount", null, new { @class = "form-control", placeholder = "Размер ставки" })
+                    <input type="submit" name="Ставка!" />
+                    <label>@ViewBag.BidError</label>
+                </div>
             }
         }
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>@Html.Label("Время"))</th>
-                    <th>@Html.Label("Сумма"))</th>
-                    <th>@Html.Label("Пользователь"))</th>
+                    <th>@Html.Label("Время")</th>
+                    <th>@Html.Label("Сумма")</th>
+                    <th>@Html.Label("Пользователь")</th>
                    
                 </tr>
             </thead>
@@ -78,7 +88,7 @@
                 @foreach (var item in Model.Bids)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Datetime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Time)</td>
                         <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                         <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
                     </tr>

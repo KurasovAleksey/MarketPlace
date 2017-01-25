@@ -22,14 +22,18 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <p>
-            Оставьте жалобу на пользователя @Html.DisplayFor(model => model.UserName),
-            и администрация обязательно рассмотрит её!
-        </p>
-        <p>@Html.ActionLink("Оставить жалобу", "Create", "Complaint", new { userName = Model.UserName }, null)</p>
         @if (User.IsInRole("Admin"))
         {
-            <p>@Html.ActionLink("Заблокировать пользователя", "All", "Feedback", new { userName = Model.UserName }, null)</p>
+            <p>@Html.ActionLink("Заблокировать пользователя", "EditUserBand", "Account", new { userName = Model.UserName }, null)</p>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        @if (User.IsInRole("Admin"))
+        {
+            <p>@Html.ActionLink("Показать все жалобы на пользователя", "List", "Complaint", new { userName = Model.UserName }, null)</p>
         }
     </div>
 </div>

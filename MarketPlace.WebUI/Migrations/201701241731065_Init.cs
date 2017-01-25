@@ -3,7 +3,7 @@ namespace MarketPlace.WebUI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class Init : DbMigration
     {
         public override void Up()
         {
@@ -18,10 +18,12 @@ namespace MarketPlace.WebUI.Migrations
                         Information = c.String(maxLength: 400),
                         CreationDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                         PicturePath = c.String(maxLength: 1000),
+                        ImageMimeType = c.String(),
                         UserId = c.Int(nullable: false),
                         CategoryId = c.Int(nullable: false),
                         IsNationalCurrency = c.Boolean(nullable: false),
                         FinishDate = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        IsFinished = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.AuctionId)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: false)
@@ -35,7 +37,7 @@ namespace MarketPlace.WebUI.Migrations
                     {
                         BidId = c.Int(nullable: false, identity: true),
                         Amount = c.Decimal(nullable: false, precision: 16, scale: 4),
-                        Datetime = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
+                        Time = c.DateTime(nullable: false, precision: 7, storeType: "datetime2"),
                         IsFinalBid = c.Boolean(nullable: false),
                         UserId = c.Int(nullable: false),
                         AuctionId = c.Int(nullable: false),

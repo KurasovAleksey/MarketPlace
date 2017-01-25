@@ -238,9 +238,9 @@
     </Compile>
     <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Migrations\201701200242125_Initial.cs" />
-    <Compile Include="Migrations\201701200242125_Initial.Designer.cs">
-      <DependentUpon>201701200242125_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201701241731065_Init.cs" />
+    <Compile Include="Migrations\201701241731065_Init.Designer.cs">
+      <DependentUpon>201701241731065_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
@@ -260,6 +260,7 @@
     <Compile Include="Models\ViewModels\AuctionListViewModel.cs" />
     <Compile Include="Models\ViewModels\EditViewModel.cs" />
     <Compile Include="Models\AccountModels\IdentityModels.cs" />
+    <Compile Include="Models\ViewModels\UsersListViewModel.cs" />
     <Compile Include="Models\ViewModels\UserViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Models\ChatMembership.cs" />
+    <Compile Include="Modules\TimerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -361,12 +363,13 @@
     <Content Include="Views\Feedback\Delete.cshtml" />
     <Content Include="Views\Feedback\Details.cshtml" />
     <Content Include="Views\Feedback\Edit.cshtml" />
-    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Feedback\List.cshtml" />
     <Content Include="Views\Complaint\Create.cshtml" />
     <Content Include="Views\Complaint\Delete.cshtml" />
     <Content Include="Views\Complaint\Details.cshtml" />
     <Content Include="Views\Complaint\Edit.cshtml" />
-    <Content Include="Views\Complaint\Index.cshtml" />
+    <Content Include="Views\Complaint\List.cshtml" />
+    <Content Include="Views\Bid\BidCreatingError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />
@@ -378,8 +381,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701200242125_Initial.resx">
-      <DependentUpon>201701200242125_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701241731065_Init.resx">
+      <DependentUpon>201701241731065_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

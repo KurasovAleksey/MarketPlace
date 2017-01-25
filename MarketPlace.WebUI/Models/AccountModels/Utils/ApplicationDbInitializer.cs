@@ -133,8 +133,6 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                     Password = "Password1"
                 },
 
-
-
                 new
                 {
                     User = new ApplicationUser
@@ -155,7 +153,7 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                         Name = "Сергей",
                         Sname = "Рак",
                         UserName = "RustStalker",
-                        Email = "ivan.orlov@gmail.com",
+                        Email = "sergey.rak@gmail.com",
                         PhoneNumber = "0667895410"
                     },
                     Password = "Password1"
@@ -180,12 +178,12 @@ namespace MarketPlace.WebUI.Models.AccountModels.Utils
                     {
                         Name = "Аркадий",
                         Sname = "Пушкин",
-                        UserName = "julka23",
+                        UserName = "PushkinArc",
                         Email = "arkashaPush@gmail.com",
                         PhoneNumber = "0667895411"
                     },
                     Password = "Password1"
-                },
+                }
 
                 //new
                 //{
