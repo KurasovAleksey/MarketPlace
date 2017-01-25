@@ -6,6 +6,7 @@
         @Html.AntiForgeryToken();
 
         <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Аукционы", "List", "Auction")</li>
             <li>
                 @Html.ActionLink("Здравствуйте, " + User.Identity.Name + "!", "Users", "Account", routeValues: new { userName = User.Identity.Name }, htmlAttributes: new { title = "Личный кабинет" })
             </li>

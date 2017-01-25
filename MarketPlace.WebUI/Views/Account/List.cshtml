@@ -26,6 +26,8 @@
     </div>
 </form>
 
+@if (Model.Users.Any())
+{
 <div class="row">
     <div class="col-md-12">
         <table class="table">
@@ -63,7 +65,7 @@
                             @if (@item.IsBanned)
                             { @Html.ActionLink("Снять бан", "EditUserBan", new { userName = item.UserName }, new { @class = "btn btn-primary" }) }
                             else
-                            { 
+                            {
                                 @Html.ActionLink("Бан", "EditUserBan", new { userName = item.UserName }, new { @class = "btn btn-primary" })
                                 if (@item.TopRole == "Пользователь")
                                 { @Html.ActionLink("Повысить", "EditUserRole", new { userName = item.UserName }, new { @class = "btn btn-primary" }) }
@@ -81,7 +83,13 @@
 
 <div class="btn-group">
     @Html.PageLinks(Model.PageInfo,
-    x => Url.Action("List", new { search = ViewBag.Search, role = ViewBag.Role, page = x }))
+        x => Url.Action("List", new { search = ViewBag.Search, role = ViewBag.Role, page = x }))
 </div>
+}
+else
+{
+    <br />
+    <p class="text-center">Список пуст</p>
+}
 
 

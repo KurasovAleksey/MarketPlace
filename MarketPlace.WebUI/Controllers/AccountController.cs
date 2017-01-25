@@ -116,9 +116,7 @@ namespace MarketPlace.WebUI.Controllers
                 else
                 {
                     await SignInAsync(user, isPersistent: false);
-                    if (String.IsNullOrEmpty(returnUrl))
-                        return RedirectToAction("Users", "Account", new { userName = userName });
-                    return Redirect(returnUrl);
+                    return RedirectToAction("Users", "Account", new { userName = userName });
                 }
             }
             ViewBag.returnUrl = returnUrl;
@@ -187,7 +185,7 @@ namespace MarketPlace.WebUI.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult List(string search, bool? admins = false, bool? banned = false, int page = 1)
         {
-            int pageSize = 1;
+            int pageSize = 15;
 
             ViewBag.Search = search;
             ViewBag.Admins = admins;

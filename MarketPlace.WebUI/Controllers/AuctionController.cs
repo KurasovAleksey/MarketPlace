@@ -12,6 +12,8 @@ using MarketPlace.WebUI.Models.ViewModels;
 using PagedList;
 using System.IO;
 using System.Drawing;
+using Microsoft.AspNet.Identity.Owin;
+using MarketPlace.WebUI.Models.AccountModels.Utils;
 
 namespace MarketPlace.WebUI.Controllers
 {
@@ -19,12 +21,20 @@ namespace MarketPlace.WebUI.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private ApplicationUserManager UserManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+        }
+
         // Users Auctions
         // GET: Auction
         [AllowAnonymous]
         public ActionResult List(string user, int? category, string search, int page = 1)
         {
-            int pageSize = 1;
+            int pageSize = 10;
 
             ViewBag.User = user;
             ViewBag.Search = search;
@@ -56,6 +66,42 @@ namespace MarketPlace.WebUI.Controllers
             };
 
             return View(alvm);
+        }
+
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult> History(string userName, int page = 1)
+        {
+            ApplicationUser user = await UserManager.FindByNameAsync(userName);
+            if (user == null) return HttpNotFound();
+
+            int pageSize = 10;
+
+            ViewBag.User = user;
+
+            IEnumerable<Bid> bids = db.Bids.Include(b => b.Auction);
+
+            bids = from bid in bids
+                                    where bid.UserId == user.Id
+                                    group bid by bid.AuctionId
+                                    into groups
+                                    select groups.OrderByDescending(b => b.Time).FirstOrDefault();
+
+            IEnumerable<Bid> bidsPerPage = bids.OrderByDescending(b => b.Time).Skip((page - 1) * pageSize).Take(pageSize);
+
+            AuctionHistoryModel ahm = new AuctionHistoryModel();
+            ahm.Auctions = new List<Pair>();
+
+            foreach (var bid in bidsPerPage)
+            {
+                ahm.Auctions.Add(new Pair() { Auction = bid.Auction, IsWin = bid.IsFinalBid });
+            }
+
+            PageInfo pageInfo = new PageInfo
+            { PageNumber = page, PageSize = pageSize, TotalItems = bids.ToList().Count };
+
+            ahm.pageInfo = pageInfo;
+
+            return View(ahm);
         }
 
         // GET: Auction/Details/5

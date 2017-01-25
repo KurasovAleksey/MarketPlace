@@ -1,0 +1,55 @@
+﻿@model MarketPlace.WebUI.Models.ViewModels.AuctionHistoryModel
+@using MarketPlace.WebUI.Helpers
+
+@{
+    ViewBag.Title = "История";
+}
+
+<br />
+@if (Model.Auctions.Any())
+{
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+                <th>Цена</th>
+                <th>Заканчивается</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.Auctions)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Auction.Title, "Details", new { id = item.Auction.AuctionId })
+                    </td>
+                   
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Auction.Description))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Auction.Price)
+
+                    </td>
+                    <td>
+                        @item.Auction.FinishDate.ToString()
+                    </td>
+                    <td>
+                        @if (item.IsWin)
+                        { <p>Победа</p> }
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+    <div class="btn-group">
+        @Html.PageLinks(Model.pageInfo,
+      x => Url.Action("List", new { user = ViewBag.User, category = ViewBag.Category, search = ViewBag.Search, page = x }))
+    </div>
+}
+else { <p class="text-center">Список пуст</p> }
+

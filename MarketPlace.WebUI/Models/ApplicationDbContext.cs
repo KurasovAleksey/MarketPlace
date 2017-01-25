@@ -9,7 +9,7 @@ namespace MarketPlace.WebUI.Models
     {
         static ApplicationDbContext()
         {
-            Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
+            //Database.SetInitializer<ApplicationDbContext>(new ApplicationDbInitializer());
         }
 
         public ApplicationDbContext() : base("MarketPlace")

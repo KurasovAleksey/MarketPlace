@@ -5,12 +5,8 @@
     ViewBag.Title = "Аукционы";
 }
 
-@if((ViewBag.User as string) != "" && (ViewBag.User as string) == User.Identity.Name)
-<p>
-    @Html.ActionLink("Создать новый аукцион", "Create", new { @class="btn btn-default" })
-</p>
-
 <br />
+
 
 <div class="row">
     @using (Html.BeginForm("List", "Auction", FormMethod.Post, new { @class = "form-inline", role = "form" }))
@@ -25,17 +21,22 @@
                      htmlAttributes: new { @class = "form-control" })
 
             <input type="submit" value="Поиск" class="btn btn-default" />
+            @if ((ViewBag.User as string) != "" && (ViewBag.User as string) == User.Identity.Name)
+            {
+                @Html.ActionLink("Создать новый аукцион", "Create", null, new { @class = "btn btn-default" })
+            }
         </div>
     }
 
     
 </div>
 
+@if (Model.Auctions.Any())
+{
 <div class="row">
     <table class="table">
         <tr>
             <th>Название</th>
-            <th>Изображение</th>
             <th>Категория</th>
             <th>Описание</th>
             <th>Цена</th>
@@ -50,18 +51,11 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @if (item.PicturePath != null)
-                    {
-                    <img class="img-thumbnail" width="150" height="150"
-                         src="@Url.Content(item.PicturePath)" />
-                    }
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Category.Title)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description))
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
@@ -71,7 +65,7 @@
                     @item.FinishDate.ToString()
                 </td>
                 <td>
-                    @Html.ActionLink("Подробнее", "Details", new { id = item.AuctionId }) |
+                    @Html.ActionLink("Подробнее", "Details", new { id = item.AuctionId })
                 </td>
             </tr>
         }
@@ -80,6 +74,8 @@
 </div>
 
 <div class="btn-group">
-    @Html.PageLinks(Model.PageInfo, 
-    x => Url.Action("List", new { user=ViewBag.User, category=ViewBag.Category, search=ViewBag.Search, page = x }))
+    @Html.PageLinks(Model.PageInfo,
+            x => Url.Action("List", new { user = ViewBag.User, category = ViewBag.Category, search = ViewBag.Search, page = x }))
 </div>
+}
+else { <br /> <p class="text-center">Список пуст</p> }

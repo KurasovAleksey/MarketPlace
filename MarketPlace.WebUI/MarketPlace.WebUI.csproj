@@ -257,6 +257,7 @@
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\ViewModels\AuctionCreateModel.cs" />
+    <Compile Include="Models\ViewModels\AuctionHistoryModel.cs" />
     <Compile Include="Models\ViewModels\AuctionListViewModel.cs" />
     <Compile Include="Models\ViewModels\EditViewModel.cs" />
     <Compile Include="Models\AccountModels\IdentityModels.cs" />
@@ -370,6 +371,7 @@
     <Content Include="Views\Complaint\Edit.cshtml" />
     <Content Include="Views\Complaint\List.cshtml" />
     <Content Include="Views\Bid\BidCreatingError.cshtml" />
+    <Content Include="Views\Auction\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Code\" />

@@ -17,8 +17,8 @@
         <dd>
             @if (Model.PicturePath == null)
             {
-                <img class="img-thumbnail" width="400" height="300"
-                     src="@Url.Content("~/Files/no_photo.png") />
+                <img class="img-thumbnail" width="225" height="225"
+                     src="@Url.Content("~/Files/no_photo.png")" />
             }
             else
             {
@@ -30,8 +30,8 @@
         <dt>@Html.DisplayNameFor(model => model.Category.Title)</dt>
         <dd>@Html.DisplayFor(model => model.Category.Title)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.User.Name)</dt>
-        <dd>@Html.DisplayFor(model => model.User.Name)</dd>
+        <dt>Владелец</dt>
+        <dd>@Html.ActionLink(Model.User.UserName, "Users", "Account", new { userName=Model.User.UserName }, null)</dd>
 
         <dt>@Html.DisplayNameFor(model => model.Description)</dt>
         <dd>@Html.DisplayFor(model => model.Description)</dd>
@@ -50,7 +50,7 @@
     </dl>
 </div>
 <div class="row">
-    <div class="col-md-offset-4 col-md-6">
+    <div class="col-md-offset-3 col-md-6">
         @if (User.Identity.Name == Model.User.UserName)
         {
             @Html.ActionLink("Остановить", "Finish", new { id = Model.AuctionId }, new { @class = "btn btn-default" })
@@ -65,10 +65,10 @@
             {
                 @Html.AntiForgeryToken()
                 <div class="form-group">
-                    @Html.Hidden("AuctionId", @Model.AuctionId);
-                    @Html.Hidden("UserId", User.Identity.GetUserId());
+                    @Html.Hidden("AuctionId", @Model.AuctionId)
+                    @Html.Hidden("UserId", User.Identity.GetUserId())
                     @Html.TextBox("Amount", null, new { @class = "form-control", placeholder = "Размер ставки" })
-                    <input type="submit" name="Ставка!" />
+                    <input type="submit" name="Ставка!" class="btn btn-default" />
                     <label>@ViewBag.BidError</label>
                 </div>
             }

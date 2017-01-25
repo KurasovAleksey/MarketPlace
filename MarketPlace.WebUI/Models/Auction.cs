@@ -18,21 +18,26 @@ namespace MarketPlace.WebUI.Models
         [Required]
         [MaxLength(100)]
         [Column(TypeName = "nvarchar")]
+        [Display(Name = "Название")]
         public string Title { get; set; }
 
         [Required]
         [MaxLength(1000)]
         [Column(TypeName = "nvarchar")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Цена")]
         public decimal Price { get; set; }
 
         [Column(TypeName = "nvarchar")]
         [MaxLength(400)]
+        [Display(Name = "Доп.информация")]
         public string Information { get; set; }
 
         [Column(TypeName = "datetime2")]
+        [Display(Name = "Начало")]
         public DateTime CreationDate { get; set; }
 
         [MaxLength(1000)]
@@ -55,10 +60,12 @@ namespace MarketPlace.WebUI.Models
 
         [Required]
         [Column("FinishDate", TypeName = "datetime2")]
+        [Display(Name = "Окончание")]
         public DateTime FinishDate { get; set; }
 
        
         [Column("IsFinished", TypeName = "bit")]
+        [Display(Name = "Завершен")]
         public bool IsFinished { get; set; }
 
         public ICollection<Bid> Bids { get; set; }

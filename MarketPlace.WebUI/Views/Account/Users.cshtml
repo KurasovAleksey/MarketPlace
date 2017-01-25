@@ -1,6 +1,13 @@
 @model MarketPlace.WebUI.Models.ApplicationUser
 
 
+@{
+    if (Model.UserName == User.Identity.Name) {
+        ViewBag.Title = "Личный кабинет"; }
+    else { ViewBag.Title = Model.UserName; }
+}
+
+
 <!DOCTYPE html>
 
 <html>
