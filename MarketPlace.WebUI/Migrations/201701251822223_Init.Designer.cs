@@ -13,7 +13,7 @@ namespace MarketPlace.WebUI.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201701241731065_Init"; }
+            get { return "201701251822223_Init"; }
         }
         
         string IMigrationMetadata.Source

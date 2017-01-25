@@ -238,9 +238,9 @@
     </Compile>
     <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Migrations\201701241731065_Init.cs" />
-    <Compile Include="Migrations\201701241731065_Init.Designer.cs">
-      <DependentUpon>201701241731065_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201701251822223_Init.cs" />
+    <Compile Include="Migrations\201701251822223_Init.Designer.cs">
+      <DependentUpon>201701251822223_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels\Utils\ApplicationDbInitializer.cs" />
@@ -319,7 +319,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -383,8 +385,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701241731065_Init.resx">
-      <DependentUpon>201701241731065_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701251822223_Init.resx">
+      <DependentUpon>201701251822223_Init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

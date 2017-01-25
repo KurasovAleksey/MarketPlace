@@ -25,7 +25,7 @@ namespace MarketPlace.WebUI.Modules
             {
                 using (db = new ApplicationDbContext())
                 {
-                    db.Database.SqlQuery<int>("exec ChooseWinners");
+                    db.Database.ExecuteSqlCommand("EXEC ChooseWinners");
                 }
             }
         }

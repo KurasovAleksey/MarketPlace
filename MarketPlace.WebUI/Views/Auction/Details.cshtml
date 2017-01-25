@@ -53,7 +53,11 @@
     <div class="col-md-offset-3 col-md-6">
         @if (User.Identity.Name == Model.User.UserName)
         {
+            if (Model.FinishDate > DateTime.Now)
+            {
             @Html.ActionLink("Остановить", "Finish", new { id = Model.AuctionId }, new { @class = "btn btn-default" })
+            }
+            else { <p>Аукцион завершен</p> }
             if (Model.Bids.Count == 0)
             {
                 @Html.ActionLink("Редактировать", "Edit", new { id = Model.AuctionId }, new { @class = "btn btn-default" })
@@ -80,7 +84,7 @@
                     <th>@Html.Label("Время")</th>
                     <th>@Html.Label("Сумма")</th>
                     <th>@Html.Label("Пользователь")</th>
-                   
+                    <th></th>
                 </tr>
             </thead>
 
@@ -91,7 +95,9 @@
                         <td>@Html.DisplayFor(modelItem => item.Time)</td>
                         <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                         <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
-                    </tr>
+                        <td>@if (item.IsFinalBid) { <p>Победитель</p> }</td>
+
+                </tr>
                 }
             </tbody>
 

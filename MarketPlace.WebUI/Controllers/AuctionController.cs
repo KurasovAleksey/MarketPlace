@@ -122,6 +122,7 @@ namespace MarketPlace.WebUI.Controllers
             db.Entry(auction).Reference("Category").Load();
             foreach (var bid in auction.Bids)
                 db.Entry(bid).Reference("User").Load();
+            auction.Bids = auction.Bids.OrderByDescending(b => b.Time).ToList();
             ViewBag.Currency = (auction.IsNationalCurrency) 
                 ? Currency.UAH.ToString() 
                 : Currency.USD.ToString();
@@ -212,6 +213,7 @@ namespace MarketPlace.WebUI.Controllers
             {
                 return HttpNotFound();
             }
+            
             auction.FinishDate = DateTime.Now;
             db.Entry(auction).State = EntityState.Modified;
             await db.SaveChangesAsync();
@@ -246,6 +248,13 @@ namespace MarketPlace.WebUI.Controllers
             if (auction == null)
             {
                 return HttpNotFound();
+            }
+            db.Entry(auctionFull).Collection("Bids").Load();
+            if (auctionFull.Bids.Any())
+            {
+                ViewBag.BidsAlreadyError = "Вы не можете редактировать аукцион после того, как будет внесена первая ставка!";
+                ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Title", auction.CategoryId);
+                return View(auction);
             }
             if (ModelState.IsValid)
             {

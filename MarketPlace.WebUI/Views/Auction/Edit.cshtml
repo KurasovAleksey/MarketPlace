@@ -7,6 +7,11 @@
 
 <h2>Редактирование аукциона</h2>
 
+@if(ViewBag.BidsAlreadyError != null)
+{
+    <p>@(ViewBag.BidsAlreadyError as string)</p>
+}
+
 @using (Html.BeginForm("Edit", "Auction",
         FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
